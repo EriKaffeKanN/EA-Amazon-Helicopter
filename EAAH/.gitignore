@@ -2,3 +2,4 @@ SFML-2.5.1
 compile_commands.json
 build
 .cache
+.vscode
