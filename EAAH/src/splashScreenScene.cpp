@@ -13,11 +13,11 @@ SplashScreenScene::SplashScreenScene ()
 void SplashScreenScene::update ()
 {
     elapsedTime += game.dt;
-    if (elapsedTime >= 5)
+    if (elapsedTime >= 3)
     {
         SceneManager::popScene ();
         // Oh what have I done??
-        SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::MAIN_MENU));
+        SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::GAME)); // REMINDER TO CHANGE BACK TO Senes::MAIN_MENU
         return;
     }
 
@@ -28,7 +28,7 @@ void SplashScreenScene::update ()
     text.setFont (font);
     text.setString ("Splash screen osv");
     text.setCharacterSize (24);
-    text.setFillColor (sf::Color::Blue);
+    text.setFillColor (sf::Color::White);
     text.setStyle (sf::Text::Bold);
 
     game.window.draw (text);

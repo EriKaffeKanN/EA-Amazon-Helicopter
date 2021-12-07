@@ -40,7 +40,7 @@ void Game::loop ()
 
 void Game::update ()
 {
-    this->window.clear (sf::Color::White);
+    this->window.clear (sf::Color::Blue);
     SceneManager::sceneQueue.back ()->update ();
     this->window.display ();
 }

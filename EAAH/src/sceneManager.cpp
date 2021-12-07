@@ -1,6 +1,7 @@
 #include "sceneManager.h"
 #include "splashScreenScene.h"
 #include "mainMenuScene.h"
+#include "gameScene.h"
 
 #include <iostream>
 
@@ -26,6 +27,9 @@ Scene* SceneManager::createScene (SceneManager::Scenes scene)
             break;
         case SceneManager::Scenes::MAIN_MENU:
             return new MainMenuScene ();
+            break;
+        case SceneManager::Scenes::GAME:
+            return new GameScene ();
             break;
     }
     // Should never reach

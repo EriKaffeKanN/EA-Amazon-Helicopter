@@ -11,7 +11,8 @@ public:
     enum class Scenes
     {
         SPLASH_SCREEN,
-        MAIN_MENU
+        MAIN_MENU,
+        GAME
     };
 
     static void pushScene (Scene* scene);

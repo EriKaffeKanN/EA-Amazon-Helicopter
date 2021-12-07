@@ -1,0 +1,24 @@
+#ifndef GAMESCENE_H_
+#define GAMESCENE_H_
+
+#include "scene.h"
+#include "entity.h"
+
+#include <memory>
+
+class GameScene : public Scene
+{
+public:
+    GameScene();
+
+    void update() override final;
+
+    void onSwitchTo() override final;
+    void onSwitchFrom() override final;
+private:
+    void spawnEntity(Entity entity, const char* texturePath);
+
+    std::vector<Entity> entities;
+};
+
+#endif

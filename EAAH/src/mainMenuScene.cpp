@@ -19,7 +19,7 @@ void MainMenuScene::update ()
     text.setFont (font);
     text.setString ("Main menu osv");
     text.setCharacterSize (24);
-    text.setFillColor (sf::Color::Blue);
+    text.setFillColor (sf::Color::White);
     text.setStyle (sf::Text::Bold);
 
     game.window.draw (text);
