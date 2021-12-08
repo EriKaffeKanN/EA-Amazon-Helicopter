@@ -19,7 +19,7 @@ void Entity::update()
     this->sprite.setPosition(pos.x, pos.y);
 }
 
-void Entity::onCollision()
+void Entity::onCollision(Entity* other)
 {
 
 }

@@ -15,6 +15,15 @@ GameScene::GameScene()
     spawnEntity(player, "../resources/textures/test.png");
 }
 
+GameScene::~GameScene()
+{
+    for(int i = this->entities.size()-1; i >= 0; i++)
+    {
+        delete this->entities[i];
+        this->entities.pop_back();
+    }
+}
+
 void GameScene::spawnEntity(Entity* entity, const char* texturePath)
 {
     this->entities.push_back(entity);
@@ -25,7 +34,7 @@ void GameScene::spawnEntity(Entity* entity, const char* texturePath)
 void GameScene::update()
 {
     // Game logic
-    for(Entity*& entity: this->entities)
+    for(Entity* entity: this->entities)
     {
         entity->update();
     }
@@ -42,7 +51,7 @@ void GameScene::update()
     text.setStyle (sf::Text::Bold);
 
     game.window.draw (text);
-    for(Entity*& entity: this->entities)
+    for(Entity* entity: this->entities)
     {
         entity->draw();
     }

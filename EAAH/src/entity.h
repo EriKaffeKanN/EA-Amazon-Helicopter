@@ -14,7 +14,7 @@ public:
     void draw();
 
     virtual void update();
-    virtual void onCollision();
+    virtual void onCollision(Entity* other);
 
     sf::Vector2<float> pos;
     sf::Vector2<float> velocity;

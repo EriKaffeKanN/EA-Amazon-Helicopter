@@ -10,6 +10,7 @@ class GameScene : public Scene
 {
 public:
     GameScene();
+    ~GameScene();
 
     void update() override final;
 
