@@ -16,7 +16,10 @@ void SceneManager::popScene ()
 {
     delete sceneQueue.back ();
     sceneQueue.pop_back ();
-    sceneQueue.back ()->onSwitchTo ();
+    if (!sceneQueue.empty ())
+    {
+        sceneQueue.back ()->onSwitchTo ();
+    }
 }
 
 bool SceneManager::returnToScene (SceneManager::Scenes scene)
