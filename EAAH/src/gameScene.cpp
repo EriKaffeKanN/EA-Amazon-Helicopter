@@ -11,22 +11,23 @@ GameScene::GameScene()
 {
     sf::Vector2<float> testPos = {20.f, 20.f};
     sf::Vector2<float> testSize = {90.f, 90.f};
-    PlayerEntity player(testPos, testSize);
+    Entity* player = new PlayerEntity(testPos, testSize);
     spawnEntity(player, "../resources/textures/test.png");
 }
 
-void GameScene::spawnEntity(Entity entity, const char* texturePath)
+void GameScene::spawnEntity(Entity* entity, const char* texturePath)
 {
     this->entities.push_back(entity);
-    this->entities.back().LoadSprite(texturePath);
+    // Register as collider maybe?
+    this->entities.back()->LoadSprite(texturePath);
 }
 
 void GameScene::update()
 {
     // Game logic
-    for(Entity& entity: this->entities)
+    for(Entity*& entity: this->entities)
     {
-        entity.update();
+        entity->update();
     }
 
     // Drawing
@@ -41,9 +42,9 @@ void GameScene::update()
     text.setStyle (sf::Text::Bold);
 
     game.window.draw (text);
-    for(Entity& entity: this->entities)
+    for(Entity*& entity: this->entities)
     {
-        entity.draw();
+        entity->draw();
     }
 }
 
