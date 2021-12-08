@@ -8,18 +8,26 @@
 class Entity
 {
 public:
-    Entity(sf::Vector2<float> pos, sf::Vector2<float> velocity);
+    Entity(sf::Vector2<float> pos, sf::Vector2<float> size, const char* texturePath, sf::Vector2<int> frameSize, int animationSize);
     
-    void LoadSprite(const char* texturePath);
+    void LoadSpriteSheet();
     void draw();
 
     virtual void update();
     virtual void onCollision(Entity* other);
+    virtual void updateAnimation();
 
     sf::Vector2<float> pos;
     sf::Vector2<float> velocity;
     sf::Vector2<float> size;
+protected:
+    float animationLength = 0.3f;
+    float animationCounter = 0.f;
+    int animationFrame;
+    int animationSize;
 private:
+    const char* texturePath;
+    sf::Vector2<int> animationFrameSize;
     sf::Texture texture;
     sf::Sprite sprite;
 };

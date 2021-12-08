@@ -17,7 +17,7 @@ public:
     void onSwitchTo() override final;
     void onSwitchFrom() override final;
 private:
-    void spawnEntity(Entity* entity, const char* texturePath);
+    void spawnEntity(Entity* entity);
 
     std::vector<Entity*> entities;
 };

@@ -11,9 +11,9 @@ GameScene::GameScene()
     : Scene (SceneManager::Scenes::GAME)
 {
     sf::Vector2<float> testPos = {20.f, 20.f};
-    sf::Vector2<float> testSize = {90.f, 90.f};
+    sf::Vector2<float> testSize = {300.f, 300.f};
     Entity* player = new PlayerEntity(testPos, testSize);
-    spawnEntity(player, "../resources/textures/test.png");
+    spawnEntity(player);
 }
 
 GameScene::~GameScene()
@@ -25,11 +25,11 @@ GameScene::~GameScene()
     }
 }
 
-void GameScene::spawnEntity(Entity* entity, const char* texturePath)
+void GameScene::spawnEntity(Entity* entity)
 {
     this->entities.push_back(entity);
     // Register as collider maybe?
-    this->entities.back()->LoadSprite(texturePath);
+    this->entities.back()->LoadSpriteSheet();
 }
 
 void GameScene::update()
