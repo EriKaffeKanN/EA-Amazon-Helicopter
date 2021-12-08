@@ -3,7 +3,7 @@
 
 Game::Game ()
 {
-    this->dt = 0;
+    this->ft = 0;
 }
 
 void Game::init (sf::VideoMode videoMode, const char* windowTitle)
@@ -15,7 +15,7 @@ void Game::init (sf::VideoMode videoMode, const char* windowTitle)
 void Game::loop ()
 {
     sf::Clock clock;
-    this->dt = clock.restart ().asSeconds ();
+    this->ft = clock.restart ().asSeconds ();
 
     while (this->window.isOpen())
     {
@@ -34,13 +34,13 @@ void Game::loop ()
 
         this->update ();
 
-        this->dt = clock.restart ().asSeconds ();
+        this->ft = clock.restart ().asSeconds ();
     }
 }
 
 void Game::update ()
 {
     this->window.clear (sf::Color::Blue);
-    SceneManager::sceneQueue.back ()->update ();
+    SceneManager::currScene ()->update ();
     this->window.display ();
 }

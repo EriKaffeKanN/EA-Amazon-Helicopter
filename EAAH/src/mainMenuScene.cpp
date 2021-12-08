@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 MainMenuScene::MainMenuScene ()
+    : Scene (SceneManager::Scenes::MAIN_MENU)
 {
 
 }

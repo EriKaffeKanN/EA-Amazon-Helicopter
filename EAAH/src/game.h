@@ -13,7 +13,8 @@ public:
     void update ();
 
     sf::RenderWindow window;
-    float dt;
+    // Frame time
+    float ft;
 };
 
 // Defined in main.cpp

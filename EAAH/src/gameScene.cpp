@@ -8,6 +8,7 @@
 #include <iostream>
 
 GameScene::GameScene()
+    : Scene (SceneManager::Scenes::GAME)
 {
     sf::Vector2<float> testPos = {20.f, 20.f};
     sf::Vector2<float> testSize = {90.f, 90.f};

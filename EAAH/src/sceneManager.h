@@ -1,9 +1,10 @@
 #ifndef SCENEMANAGER_H
 #define SCENEMANAGER_H
 
-#include "scene.h"
-
 #include <deque>
+
+// Avoid cyclic dependency
+class Scene;
 
 class SceneManager
 {
@@ -17,9 +18,12 @@ public:
 
     static void pushScene (Scene* scene);
     static void popScene ();
+    // Returns false if no active scene can be found
     static bool returnToScene (Scenes scene);
     static Scene* createScene (Scenes scene);
+    static Scene* currScene ();
 
+private:
     static std::deque<Scene*> sceneQueue;
 };
 

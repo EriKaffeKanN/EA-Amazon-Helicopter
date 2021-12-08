@@ -6,18 +6,18 @@
 #include <SFML/Graphics.hpp>
 
 SplashScreenScene::SplashScreenScene ()
+    : Scene (SceneManager::Scenes::SPLASH_SCREEN)
 {
     this->elapsedTime = 0;
 }
 
 void SplashScreenScene::update ()
 {
-    elapsedTime += game.dt;
+    elapsedTime += game.ft;
     if (elapsedTime >= 3)
     {
         SceneManager::popScene ();
-        // Oh what have I done??
-        SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::GAME)); // REMINDER TO CHANGE BACK TO Senes::MAIN_MENU
+        SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::GAME)); // REMINDER TO CHANGE BACK TO Scenes::MAIN_MENU
         return;
     }
 

@@ -16,6 +16,26 @@ void SceneManager::popScene ()
 {
     delete sceneQueue.back ();
     sceneQueue.pop_back ();
+    sceneQueue.back ()->onSwitchTo ();
+}
+
+bool SceneManager::returnToScene (SceneManager::Scenes scene)
+{
+    for (auto it = sceneQueue.begin (); it != sceneQueue.end (); it++)
+    {
+        if ((*it)->getType () == scene)
+        {
+            while (it != sceneQueue.end ())
+            {
+                SceneManager::popScene ();
+            }
+
+            sceneQueue.back ()->onSwitchTo ();
+            return true;
+        }
+    }
+
+    return false;
 }
 
 Scene* SceneManager::createScene (SceneManager::Scenes scene)
@@ -34,4 +54,9 @@ Scene* SceneManager::createScene (SceneManager::Scenes scene)
     }
     // Should never reach
     return nullptr;
+}
+
+Scene* SceneManager::currScene ()
+{
+    return sceneQueue.back ();
 }
