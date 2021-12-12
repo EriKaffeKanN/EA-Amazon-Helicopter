@@ -30,7 +30,8 @@ bool SceneManager::returnToScene (SceneManager::Scenes scene)
         {
             while (it != sceneQueue.end ())
             {
-                SceneManager::popScene ();
+                delete sceneQueue.back ();
+                sceneQueue.pop_back ();
             }
 
             sceneQueue.back ()->onSwitchTo ();
