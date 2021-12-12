@@ -62,5 +62,10 @@ Scene* SceneManager::createScene (SceneManager::Scenes scene)
 
 Scene* SceneManager::currScene ()
 {
-    return sceneQueue.back ();
+    if (!sceneQueue.empty ())
+    {
+        return sceneQueue.back ();
+    }
+    return nullptr;
+}
 }

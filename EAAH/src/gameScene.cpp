@@ -18,7 +18,7 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-    for(int i = this->entities.size()-1; i >= 0; i++)
+    for(int i = this->entities.size()-1; i >= 0; i--)
     {
         delete this->entities[i];
         this->entities.pop_back();
