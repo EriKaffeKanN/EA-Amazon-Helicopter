@@ -9,6 +9,7 @@ class Entity
 {
 public:
     Entity(sf::Vector2<float> pos, sf::Vector2<float> size, const char* texturePath, sf::Vector2<int> frameSize, int animationSize);
+    virtual ~Entity () {  };
     
     void LoadSpriteSheet();
     void draw();
@@ -17,6 +18,8 @@ public:
     virtual void onCollision(Entity* other);
     virtual void updateAnimation();
 
+    // TODO: Consider removing this in favor of the already
+    // available sprite position
     sf::Vector2<float> pos;
     sf::Vector2<float> velocity;
     sf::Vector2<float> size;
