@@ -6,7 +6,8 @@
 #include <SFML/Graphics.hpp>
 
 SplashScreenScene::SplashScreenScene ()
-    : Scene (SceneManager::Scenes::SPLASH_SCREEN)
+    : Scene (SceneManager::Scenes::SPLASH_SCREEN,
+            SceneManager::getBgPath (SceneManager::Scenes::SPLASH_SCREEN))
 {
     this->elapsedTime = 0;
 }
@@ -20,6 +21,8 @@ void SplashScreenScene::update ()
         SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::GAME)); // REMINDER TO CHANGE BACK TO Scenes::MAIN_MENU
         return;
     }
+
+    game.window.draw (this->background);
 
     sf::Font font;
     font.loadFromFile ("../resources/fonts/LiberationSans-Regular.ttf");

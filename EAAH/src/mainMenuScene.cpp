@@ -6,13 +6,16 @@
 #include <SFML/Graphics.hpp>
 
 MainMenuScene::MainMenuScene ()
-    : Scene (SceneManager::Scenes::MAIN_MENU)
+    : Scene (SceneManager::Scenes::MAIN_MENU,
+             SceneManager::getBgPath (SceneManager::Scenes::MAIN_MENU))
 {
 
 }
 
 void MainMenuScene::update ()
 {
+    game.window.draw (this->background);
+
     sf::Font font;
     font.loadFromFile ("../resources/fonts/LiberationSans-Regular.ttf");
 

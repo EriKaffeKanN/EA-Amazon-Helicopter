@@ -1,12 +1,14 @@
 #ifndef SCENE_H
 #define SCENE_H
 
+#include <SFML/Graphics.hpp>
+
 #include "sceneManager.h"
 
 class Scene
 {
 public:
-    Scene (SceneManager::Scenes type);
+    Scene (SceneManager::Scenes type, const char* bgPath);
     virtual ~Scene () { };
 
     virtual void update () = 0;
@@ -18,6 +20,18 @@ public:
 
     SceneManager::Scenes getType ();
 
+protected:
+    class BgImage : public sf::Drawable
+    {
+    public:
+        BgImage (sf::Window&, const char* image);
+        void draw (sf::RenderTarget&, sf::RenderStates) const override;
+    private:
+        sf::VertexArray verticies;
+        sf::Texture image;
+    };
+
+    BgImage background;
 private:
     SceneManager::Scenes sceneType;
     // Entities and other stuff
