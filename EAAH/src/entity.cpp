@@ -14,9 +14,9 @@ Entity::Entity(sf::Vector2<float> pos, sf::Vector2<float> size, const char* text
     this->velocity = {0.f, 0.f};
 }
 
-void Entity::draw()
+void Entity::draw (sf::RenderTarget& target, sf::RenderStates states) const
 {
-    game.window.draw(this->sprite);
+    target.draw (this->sprite);
 }
 
 void Entity::update()

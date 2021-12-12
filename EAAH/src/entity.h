@@ -5,14 +5,13 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-class Entity
+class Entity : public sf::Drawable
 {
 public:
     Entity(sf::Vector2<float> pos, sf::Vector2<float> size, const char* texturePath, sf::Vector2<int> frameSize, int animationSize);
     virtual ~Entity () {  };
     
     void LoadSpriteSheet();
-    void draw();
 
     virtual void update();
     virtual void onCollision(Entity* other);
@@ -29,6 +28,7 @@ protected:
     int animationFrame;
     int animationSize;
 private:
+    void draw (sf::RenderTarget&, sf::RenderStates states) const override;
     const char* texturePath;
     sf::Vector2<int> animationFrameSize;
     sf::Texture texture;

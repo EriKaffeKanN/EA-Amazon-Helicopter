@@ -54,7 +54,7 @@ void GameScene::update()
     game.window.draw (text);
     for(Entity* entity: this->entities)
     {
-        entity->draw();
+        game.window.draw (*entity);
     }
 }
 
