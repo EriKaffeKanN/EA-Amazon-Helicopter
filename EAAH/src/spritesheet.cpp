@@ -21,8 +21,6 @@ void SpriteSheet::loadSprite()
         std::cerr << "Failed to retrieve " << this->texturePath << std::endl;
     }
 
-    this->animationSize = this->animationSize;
-    this->frameSize = this->frameSize;
     this->sprite.setTexture(this->texture);
     this->sprite.setTextureRect(sf::IntRect(
         0, 0, // Start at frame zero
@@ -34,7 +32,6 @@ void SpriteSheet::loadSprite()
         animationSize * (size.x/textureSizeX), // Scale to fit specified dimensions
         size.y/textureSizeY
     );
-    std::cout << this->sprite.getTexture() << std::endl;
 }
 
 void SpriteSheet::update(sf::Vector2<float>& pos)
@@ -52,6 +49,4 @@ void SpriteSheet::update(sf::Vector2<float>& pos)
     }
     // Scary math that makes the animation run at constant speed and repeat itself after every "animationLength" seconds
     currentFrame = std::floor(animationCounter * animationSize/animationLength);
-
-    std::cout << &texture << std::endl;
 }

@@ -13,7 +13,6 @@ public:
 
     void updateAnimation();
 
-    void loadSprite() override final;
     void update() override final;
 };
 

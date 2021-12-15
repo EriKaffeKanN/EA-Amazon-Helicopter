@@ -7,11 +7,6 @@ PlayerEntity::PlayerEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
     spriteSheet = new SpriteSheet("../resources/textures/bulldozer_moving.png", this->size, sf::Vector2<int>(64, 64), 3, 0.3f);
 }
 
-void PlayerEntity::loadSprite()
-{
-
-}
-
 void PlayerEntity::update()
 {
     // Handle input

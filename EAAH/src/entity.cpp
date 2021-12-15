@@ -6,6 +6,7 @@
 Entity::Entity(sf::Vector2<float> pos, sf::Vector2<float> size)
 {
     this->pos = pos;
+    this->size = size;
     this->velocity = {0.f, 0.f};
 }
 
@@ -16,8 +17,7 @@ Entity::~Entity()
 
 void Entity::draw()
 {
-    if(spriteSheet != nullptr)
-        game.window.draw((*spriteSheet).sprite);
+    game.window.draw(spriteSheet->sprite);
 }
 
 void Entity::update()
