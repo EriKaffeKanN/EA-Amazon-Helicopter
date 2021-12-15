@@ -18,7 +18,7 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-    for(int i = this->entities.size()-1; i >= 0; i++)
+    for(int i = this->entities.size()-1; i >= 0; i--)
     {
         delete this->entities[i];
         this->entities.pop_back();
@@ -29,7 +29,7 @@ void GameScene::spawnEntity(Entity* entity)
 {
     this->entities.push_back(entity);
     // Register as collider maybe?
-    this->entities.back()->LoadSpriteSheet();
+    this->entities.back()->loadSprite();
 }
 
 void GameScene::update()

@@ -2,9 +2,14 @@
 #include "game.h"
 
 PlayerEntity::PlayerEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
-    : Entity(pos, size, "../resources/textures/bulldozer_moving.png", sf::Vector2<int>(64, 64), 3)
+    : Entity(pos, size)
 {
-    // do stuff lol
+    spriteSheet = new SpriteSheet("../resources/textures/bulldozer_moving.png", this->size, sf::Vector2<int>(64, 64), 3, 0.3f);
+}
+
+void PlayerEntity::loadSprite()
+{
+
 }
 
 void PlayerEntity::update()
@@ -19,5 +24,5 @@ void PlayerEntity::update()
 
 void PlayerEntity::updateAnimation()
 {
-    Entity::updateAnimation();
+    // Do epic stuff
 }
