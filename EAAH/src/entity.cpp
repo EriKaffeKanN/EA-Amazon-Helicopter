@@ -15,9 +15,9 @@ Entity::~Entity()
     delete spriteSheet;
 }
 
-void Entity::draw()
+void Entity::draw (sf::RenderTarget& target, sf::RenderStates states) const
 {
-    game.window.draw(spriteSheet->sprite);
+    target.draw (this->spriteSheet->sprite);
 }
 
 void Entity::update()

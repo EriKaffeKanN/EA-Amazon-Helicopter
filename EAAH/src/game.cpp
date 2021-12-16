@@ -37,6 +37,11 @@ void Game::loop ()
 
         this->ft = clock.restart ().asSeconds ();
     }
+
+    while (SceneManager::currScene () != nullptr)
+    {
+        SceneManager::popScene ();
+    }
 }
 
 void Game::update ()

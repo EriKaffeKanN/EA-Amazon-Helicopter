@@ -8,7 +8,8 @@
 #include <iostream>
 
 GameScene::GameScene()
-    : Scene (SceneManager::Scenes::GAME)
+    : Scene (SceneManager::Scenes::GAME,
+             SceneManager::getBgPath (SceneManager::Scenes::GAME))
 {
     sf::Vector2<float> testPos = {20.f, 20.f};
     sf::Vector2<float> testSize = {300.f, 300.f};
@@ -41,6 +42,8 @@ void GameScene::update()
     }
 
     // Drawing
+    game.window.draw (this->background);
+
     sf::Font font;
     font.loadFromFile ("../resources/fonts/LiberationSans-Regular.ttf");
 
@@ -54,7 +57,7 @@ void GameScene::update()
     game.window.draw (text);
     for(Entity* entity: this->entities)
     {
-        entity->draw();
+        game.window.draw (*entity);
     }
 }
 

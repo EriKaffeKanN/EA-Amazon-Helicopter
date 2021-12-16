@@ -7,6 +7,17 @@
 
 std::deque<Scene*> SceneManager::sceneQueue {};
 
+// TODO: Can these initializations be moved somewhere to make it clearer
+// where they are located?
+std::unordered_map<SceneManager::Scenes, SceneManager::SceneSettings> SceneManager::defaultSceneSettings = {
+    {SceneManager::Scenes::SPLASH_SCREEN,
+     SceneManager::SceneSettings {"../resources/backgrounds/splashScreenBg.png"}},
+    {SceneManager::Scenes::MAIN_MENU,
+     SceneManager::SceneSettings {"../resources/backgrounds/mainMenuBg.png"}},
+    {SceneManager::Scenes::GAME,
+     SceneManager::SceneSettings {"../resources/backgrounds/gameBg.png"}}
+};
+
 void SceneManager::pushScene (Scene* scene)
 {
     sceneQueue.push_back (scene);
@@ -30,7 +41,8 @@ bool SceneManager::returnToScene (SceneManager::Scenes scene)
         {
             while (it != sceneQueue.end ())
             {
-                SceneManager::popScene ();
+                delete sceneQueue.back ();
+                sceneQueue.pop_back ();
             }
 
             sceneQueue.back ()->onSwitchTo ();
@@ -61,5 +73,19 @@ Scene* SceneManager::createScene (SceneManager::Scenes scene)
 
 Scene* SceneManager::currScene ()
 {
-    return sceneQueue.back ();
+    if (!sceneQueue.empty ())
+    {
+        return sceneQueue.back ();
+    }
+    return nullptr;
+}
+
+const char* SceneManager::getBgPath (SceneManager::Scenes scene)
+{
+    return defaultSceneSettings [scene].bgImagePath.c_str ();
+}
+
+void SceneManager::setBgPath (Scenes scene, std::string path)
+{
+    defaultSceneSettings [scene].bgImagePath = path;
 }
