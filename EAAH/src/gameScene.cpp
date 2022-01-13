@@ -2,6 +2,7 @@
 #include "game.h"
 #include "entity.h"
 #include "playerEntity.h"
+#include "bombEntity.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -11,10 +12,11 @@ GameScene::GameScene()
     : Scene (SceneManager::Scenes::GAME,
              SceneManager::getBgPath (SceneManager::Scenes::GAME))
 {
-    sf::Vector2<float> testPos = {20.f, 20.f};
+    sf::Vector2<float> testPos = {20.f, 200.f};
     sf::Vector2<float> testSize = {300.f, 300.f};
-    Entity* player = new PlayerEntity(testPos, testSize);
-    spawnEntity(player);
+    Entity* tmpPlayer = new PlayerEntity(testPos, testSize);
+    this->player = (PlayerEntity*)tmpPlayer;
+    spawnEntity(tmpPlayer);
 }
 
 GameScene::~GameScene()
@@ -24,6 +26,7 @@ GameScene::~GameScene()
         delete this->entities[i];
         this->entities.pop_back();
     }
+    delete this->player;
 }
 
 void GameScene::spawnEntity(Entity* entity)
@@ -39,6 +42,16 @@ void GameScene::update()
     for(Entity* entity: this->entities)
     {
         entity->update();
+    }
+
+    // Input
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && this->player->bombCooldown <= 0)
+    {
+        sf::Vector2<float> bombPos = {player->pos.x + player->size.x/2.f - 32.f, player->pos.y + 164.f};
+        sf::Vector2<float> bombSize = {64.f, 64.f};
+        Entity* bomb = new BombEntity(bombPos, bombSize);
+        spawnEntity(bomb);
+        this->player->bombCooldown = 1.f;
     }
 
     // Drawing

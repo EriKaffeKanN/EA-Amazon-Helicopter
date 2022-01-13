@@ -3,6 +3,7 @@
 
 #include "scene.h"
 #include "entity.h"
+#include "playerEntity.h"
 
 #include <memory>
 
@@ -19,6 +20,7 @@ public:
 private:
     void spawnEntity(Entity* entity);
 
+    PlayerEntity* player;
     std::vector<Entity*> entities;
 };
 
