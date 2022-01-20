@@ -44,16 +44,6 @@ void GameScene::update()
         entity->update();
     }
 
-    // Input
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && this->player->bombCooldown <= 0)
-    {
-        sf::Vector2<float> bombPos = {player->pos.x + player->size.x/2.f - 32.f, player->pos.y + 164.f};
-        sf::Vector2<float> bombSize = {64.f, 64.f};
-        Entity* bomb = new BombEntity(bombPos, bombSize);
-        spawnEntity(bomb);
-        this->player->bombCooldown = 1.f;
-    }
-
     // Drawing
     game.window.draw (this->background);
 
@@ -71,6 +61,16 @@ void GameScene::update()
     for(Entity* entity: this->entities)
     {
         game.window.draw (*entity);
+    }
+
+    // Input
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && this->player->bombCooldown <= 0)
+    {
+        sf::Vector2<float> bombPos = {player->pos.x + player->size.x/2.f - 32.f, player->pos.y + 164.f};
+        sf::Vector2<float> bombSize = {64.f, 64.f};
+        Entity* bomb = new BombEntity(bombPos, bombSize);
+        spawnEntity(bomb);
+        this->player->bombCooldown = 1.f;
     }
 }
 
