@@ -8,6 +8,10 @@ BombEntity::BombEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
 
 void BombEntity::update()
 {
-    this->pos.y += 1.f;
+    this->velocity.y += 0.1f;
+    if(this->velocity.y > 5.f)
+    {
+        this->velocity.y = 5.f;
+    }
     Entity::update();
 }
