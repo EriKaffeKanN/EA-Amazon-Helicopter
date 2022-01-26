@@ -9,6 +9,8 @@ SceneManager::Scenes Scene::getType ()
     return this->sceneType;
 }
 
+// TODO: Replace window with sf::RenderTarget to make it more generic for
+// use in for example menu buttons
 Scene::BgImage::BgImage (sf::Window& window, const char* imgPath)
 {
     sf::Vector2u windowSize = window.getSize ();

@@ -5,9 +5,21 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+#include <iostream>
+
 MainMenuScene::MainMenuScene ()
     : Scene (SceneManager::Scenes::MAIN_MENU,
-             SceneManager::getBgPath (SceneManager::Scenes::MAIN_MENU))
+             SceneManager::getBgPath (SceneManager::Scenes::MAIN_MENU)),
+    menu (Menu (game.window, {
+                Menu::MenuItem ("Play", [](){
+                    SceneManager::pushScene
+                        (SceneManager::createScene (SceneManager::Scenes::GAME));
+                    }),
+                Menu::MenuItem ("Restart or something", []() {
+                    SceneManager::popScene ();
+                    SceneManager::pushScene
+                        (SceneManager::createScene (SceneManager::Scenes::SPLASH_SCREEN));
+                    })}))
 {
 
 }
@@ -27,6 +39,8 @@ void MainMenuScene::update ()
     text.setStyle (sf::Text::Bold);
 
     game.window.draw (text);
+
+    menu.update ();
 }
 
 void MainMenuScene::onSwitchTo ()

@@ -18,7 +18,7 @@ void SplashScreenScene::update ()
     if (elapsedTime >= 1)
     {
         SceneManager::popScene ();
-        SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::GAME)); // REMINDER TO CHANGE BACK TO Scenes::MAIN_MENU
+        SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::MAIN_MENU));
         return;
     }
 
