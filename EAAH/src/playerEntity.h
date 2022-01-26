@@ -14,6 +14,8 @@ public:
     void updateAnimation();
 
     void update() override final;
+
+    float bombCooldown = 0;
 };
 
 #endif

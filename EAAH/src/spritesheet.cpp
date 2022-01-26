@@ -40,7 +40,7 @@ void SpriteSheet::update(sf::Vector2<float>& pos)
     sf::IntRect framePosition(0, 0, frameSize.x, frameSize.y);
     framePosition.left = frameSize.x * currentFrame;
     this->sprite.setTextureRect(framePosition);
-    this->sprite.setPosition(pos.x, pos.y);
+    this->sprite.setPosition(pos.x + this->offsetX, pos.y);
 
     animationCounter += game.ft;
     if(animationCounter > animationLength)
@@ -49,4 +49,25 @@ void SpriteSheet::update(sf::Vector2<float>& pos)
     }
     // Scary math that makes the animation run at constant speed and repeat itself after every "animationLength" seconds
     currentFrame = std::floor(animationCounter * animationSize/animationLength);
+}
+
+void SpriteSheet::setDirection(Direction dir)
+{
+    switch (dir)
+    {
+    case Direction::Left:
+        this->sprite.setScale(
+            std::abs(this->sprite.getScale().x),
+            this->sprite.getScale().y
+            );
+        this->offsetX = 0;
+        break;
+    case Direction::Right:
+        this->sprite.setScale(
+            -std::abs(this->sprite.getScale().x),
+            this->sprite.getScale().y
+            );
+        this->offsetX = this->size.x;
+        break;
+    }
 }

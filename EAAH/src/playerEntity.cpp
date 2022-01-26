@@ -9,11 +9,25 @@ PlayerEntity::PlayerEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
 
 void PlayerEntity::update()
 {
+    this->velocity.x = 0;
     // Handle input
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        this->velocity.x = 0.03f;
+        this->velocity.x = 0.3f;
+        this->spriteSheet->setDirection(Direction::Right);
+
     }
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+    {
+        this->velocity.x = -0.3f;
+        this->spriteSheet->setDirection(Direction::Left);
+    }
+
+    if(bombCooldown > 0)
+    {
+        bombCooldown -= game.ft;
+    }
+
     Entity::update();
 }
 
