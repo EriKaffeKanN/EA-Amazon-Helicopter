@@ -2,6 +2,7 @@
 #define MAINMENUSCENE_H
 
 #include "scene.h"
+#include "menu.h"
 
 class MainMenuScene : public Scene
 {
@@ -12,7 +13,9 @@ public:
 
     void onSwitchTo () override final;
     void onSwitchFrom () override final;
+
 private:
+    Menu menu;
 };
 
 #endif
