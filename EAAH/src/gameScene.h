@@ -2,9 +2,10 @@
 #define GAMESCENE_H_
 
 #include "scene.h"
-#include "entity.h"
-#include "playerEntity.h"
-#include "tree.h"
+
+class Entity;
+class PlayerEntity;
+class Tree;
 
 class GameScene : public Scene
 {
@@ -18,6 +19,19 @@ public:
     void onSwitchFrom() override final;
 
     static const float groundLevel;
+
+    struct CollisionPacket
+    {
+        enum
+        {
+            ENEMY,
+            PLAYER,
+            FERTILIZER,
+            TREE
+        } collider;
+    };
+
+    void checkCollisions ();
 private:
     void spawnEntity(Entity* entity);
     void spawnTree(Tree* tree, int tileX);

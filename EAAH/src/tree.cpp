@@ -1,6 +1,8 @@
 #include "tree.h"
 #include "gameScene.h"
 
+#include <iostream>
+
 Tree::Tree(int length, int size)
 {
     this->length = length;

@@ -26,7 +26,7 @@ void Entity::update()
     spriteSheet->update(pos);
 }
 
-void Entity::onCollision(Entity* other)
+void Entity::onCollision(GameScene::CollisionPacket packet)
 {
 
 }

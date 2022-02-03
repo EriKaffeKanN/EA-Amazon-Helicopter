@@ -3,7 +3,9 @@
 #include "entity.h"
 #include "playerEntity.h"
 #include "bombEntity.h"
+#include "tree.h"
 
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -82,6 +84,8 @@ void GameScene::update()
         }
     }
 
+    this->checkCollisions ();
+
     // Input
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && this->player->bombCooldown <= 0)
     {
@@ -90,6 +94,67 @@ void GameScene::update()
         Entity* bomb = new BombEntity(bombPos, bombSize);
         spawnEntity(bomb);
         this->player->bombCooldown = 1.f;
+    }
+}
+
+GameScene::CollisionPacket getEntityCollisionPacket (Entity* entity)
+{
+    GameScene::CollisionPacket packet;
+    if (typeid (*entity) == typeid (PlayerEntity))
+    {
+        packet.collider = GameScene::CollisionPacket::PLAYER;
+    }
+    else if (typeid (*entity) == typeid (BombEntity))
+    {
+        packet.collider = GameScene::CollisionPacket::FERTILIZER;
+    }
+    else if (typeid (*entity) == typeid (Tree))
+    {
+        packet.collider = GameScene::CollisionPacket::ENEMY;
+    }
+
+    return packet;
+}
+
+void GameScene::checkCollisions ()
+{
+    // Entities with entities
+    for (int i = 0; i < this->entities.size (); i++)
+    {
+        sf::FloatRect box1 (this->entities [i]->pos, this->entities [i]->size);
+        for (int j = 0; j < this->entities.size (); j++)
+        {
+            if (i == j)
+                continue;
+            
+            sf::FloatRect box2 (this->entities [j]->pos, this->entities [j]->size);
+
+            if (box1.intersects (box2))
+            {
+                GameScene::CollisionPacket packet =
+                    getEntityCollisionPacket (this->entities [j]);
+
+                this->entities [i]->onCollision (packet);
+            }
+        }
+    }
+
+    // Entities with trees
+    for (int i = 0; i < this->entities.size (); i++)
+    {
+        sf::FloatRect box1 (this->entities [i]->pos, this->entities [i]->size);
+        for (int j = 0; j < this->trees.size (); j++)
+        {
+            sf::FloatRect box2 (this->trees [j]->pos,
+                    sf::Vector2f (this->trees [j]->size,
+                        this->trees [j]->size * this->trees [j]->length));
+
+            if (box1.intersects (box2))
+            {
+                GameScene::CollisionPacket packet = {GameScene::CollisionPacket::TREE};
+                this->entities [i]->onCollision (packet);
+            }
+        }
     }
 }
 

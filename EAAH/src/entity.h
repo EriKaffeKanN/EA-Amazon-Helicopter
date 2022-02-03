@@ -2,6 +2,7 @@
 #define ENTITY_H_
 
 #include "spritesheet.h"
+#include "gameScene.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -13,10 +14,9 @@ public:
     Entity(sf::Vector2<float> pos, sf::Vector2<float> size);
     virtual ~Entity();
 
-    
     void loadSprite();
     virtual void update();
-    virtual void onCollision(Entity* other);
+    virtual void onCollision(GameScene::CollisionPacket packet);
 
     sf::Vector2<float> pos;
     sf::Vector2<float> velocity;
