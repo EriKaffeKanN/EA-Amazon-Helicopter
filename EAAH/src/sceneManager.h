@@ -15,6 +15,7 @@ public:
     {
         SPLASH_SCREEN,
         MAIN_MENU,
+        PAUSE_MENU,
         GAME
     };
 

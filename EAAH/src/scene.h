@@ -15,6 +15,9 @@ public:
 
     // These are not for when the scenes are pushed/popped, but for when they
     // are returned to from some other scene (like from the pause menu)
+    //
+    // I think it might be worth it to give them empty implementations since
+    // not all scenes implement them.
     virtual void onSwitchTo () = 0;
     virtual void onSwitchFrom () = 0;
 

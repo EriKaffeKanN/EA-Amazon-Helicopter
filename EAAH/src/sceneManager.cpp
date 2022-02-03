@@ -1,6 +1,7 @@
 #include "sceneManager.h"
 #include "splashScreenScene.h"
 #include "mainMenuScene.h"
+#include "pauseMenuScene.h"
 #include "gameScene.h"
 
 #include <iostream>
@@ -14,6 +15,8 @@ std::unordered_map<SceneManager::Scenes, SceneManager::SceneSettings> SceneManag
      SceneManager::SceneSettings {"../resources/backgrounds/splashScreenBg.png"}},
     {SceneManager::Scenes::MAIN_MENU,
      SceneManager::SceneSettings {"../resources/backgrounds/mainMenuBg.png"}},
+    {SceneManager::Scenes::PAUSE_MENU,
+     SceneManager::SceneSettings {"../resources/backgrounds/pauseMenuBg.png"}},
     {SceneManager::Scenes::GAME,
      SceneManager::SceneSettings {"../resources/backgrounds/gameBg.png"}}
 };
@@ -62,6 +65,9 @@ Scene* SceneManager::createScene (SceneManager::Scenes scene)
             break;
         case SceneManager::Scenes::MAIN_MENU:
             return new MainMenuScene ();
+            break;
+        case SceneManager::Scenes::PAUSE_MENU:
+            return new PauseMenuScene ();
             break;
         case SceneManager::Scenes::GAME:
             return new GameScene ();

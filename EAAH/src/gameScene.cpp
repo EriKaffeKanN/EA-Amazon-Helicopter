@@ -94,6 +94,11 @@ void GameScene::update()
         spawnEntity(bomb);
         this->player->bombCooldown = 1.f;
     }
+    if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Escape))
+    {
+        SceneManager::pushScene (
+            SceneManager::createScene (SceneManager::Scenes::PAUSE_MENU));
+    }
 }
 
 GameScene::CollisionPacket getEntityCollisionPacket (Entity* entity)
