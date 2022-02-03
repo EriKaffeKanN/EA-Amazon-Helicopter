@@ -39,7 +39,7 @@ bool SceneManager::returnToScene (SceneManager::Scenes scene)
     {
         if ((*it)->getType () == scene)
         {
-            while (it != sceneQueue.end ())
+            while (it != std::prev (sceneQueue.end ()))
             {
                 delete sceneQueue.back ();
                 sceneQueue.pop_back ();
