@@ -33,7 +33,6 @@ GameScene::~GameScene()
         delete this->entities[i];
         this->entities.pop_back();
     }
-    delete this->player;
 }
 
 void GameScene::spawnEntity(Entity* entity)
