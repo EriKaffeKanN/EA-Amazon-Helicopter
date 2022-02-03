@@ -44,7 +44,8 @@ private:
     enum class menuInputs
     {
         UP = 1,
-        DOWN = 2
+        DOWN = 2,
+        CLICK = 4
     };
 
     uint8_t lastPressed;

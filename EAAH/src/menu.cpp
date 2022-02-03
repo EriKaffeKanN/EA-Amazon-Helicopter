@@ -21,7 +21,7 @@ void Menu::update ()
     }
     else
     {
-        this->lastPressed &= ~(1 << (static_cast<int> (Menu::menuInputs::UP) - 1));
+        this->lastPressed &= ~(static_cast<int> (Menu::menuInputs::UP));
     }
 
     if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::S))
@@ -34,15 +34,26 @@ void Menu::update ()
     }
     else
     {
-        this->lastPressed &= ~(1 << (static_cast<int> (Menu::menuInputs::DOWN) - 1));
+        this->lastPressed &= ~(static_cast<int> (Menu::menuInputs::DOWN));
     }
 
+    // This actually needs to be debounced as well since it can be returned to
+    // from the pause menu
     if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Enter))
     {
-        this->items [this->currSelected].call ();
-        // This return is absolutely neccesary to avoid segfaults, should the menu
-        // be deleted by the callback
-        return;
+        if (!(this->lastPressed & static_cast<int> (Menu::menuInputs::CLICK)))
+        {
+            this->items [this->currSelected].call ();
+            this->lastPressed |= static_cast<int> (Menu::menuInputs::CLICK);
+
+            // This return is absolutely neccesary to avoid segfaults, should the menu
+            // be deleted by the callback
+            return;
+        }
+    }
+    else
+    {
+        this->lastPressed &= ~(static_cast<int> (Menu::menuInputs::CLICK));
     }
 
     if (this->currSelected < 0)
