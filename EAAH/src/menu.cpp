@@ -28,7 +28,7 @@ void Menu::update ()
     {
         if (!(this->lastPressed & static_cast<int> (Menu::menuInputs::DOWN)))
         {
-            this->currSelected -= 1;
+            this->currSelected += 1;
             this->lastPressed |= static_cast<int> (Menu::menuInputs::DOWN);
         }
     }
@@ -59,6 +59,10 @@ void Menu::update ()
     if (this->currSelected < 0)
     {
         this->currSelected = this->items.size () - 1;
+    }
+    else if (this->currSelected == this->items.size ())
+    {
+        this->currSelected = 0;
     }
 
     this->items [this->currSelected].onSelect ();

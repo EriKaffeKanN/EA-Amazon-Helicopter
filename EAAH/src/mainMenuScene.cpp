@@ -19,6 +19,9 @@ MainMenuScene::MainMenuScene ()
                     SceneManager::popScene ();
                     SceneManager::pushScene
                         (SceneManager::createScene (SceneManager::Scenes::SPLASH_SCREEN));
+                    }),
+                Menu::MenuItem ("Exit", [](){
+                    game.window.close ();
                     })}))
 {
 
