@@ -17,6 +17,7 @@ void PlayerEntity::update()
         this->spriteSheet->setDirection(Direction::Right);
 
     }
+    
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         this->velocity.x = -0.3f;

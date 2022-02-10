@@ -20,6 +20,8 @@ Tree::~Tree()
 
 void Tree::spawn(int tileX)
 {
+    // Snap position to tile
+    // this->pos.y refers to the y-position of the stump
     this->pos.x = this->size * tileX;
     this->pos.y = GameScene::groundLevel;
 
@@ -33,6 +35,7 @@ void Tree::spawn(int tileX)
     }
 
     this->stump.setTexture(this->stumpTexture);
+    // Scale to size
     this->stump.setScale(
         this->size / this->stumpTexture.getSize().x,
         this->size / this->stumpTexture.getSize().y
