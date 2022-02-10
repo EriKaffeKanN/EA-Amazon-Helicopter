@@ -10,20 +10,13 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-const float GameScene::groundLevel = 0.f;
+const float GameScene::groundLevel = 560.f;
 
 GameScene::GameScene()
     : Scene (SceneManager::Scenes::GAME,
              SceneManager::getBgPath (SceneManager::Scenes::GAME))
 {
-    sf::Vector2<float> testPos = {20.f, 10.f};
-    sf::Vector2<float> testSize = {300.f, 300.f};
-    Entity* tmpPlayer = new PlayerEntity(testPos, testSize);
-    this->player = (PlayerEntity*)tmpPlayer;
-    spawnEntity(tmpPlayer);
-
-    Tree* tmpTree = new Tree(2, this->tileSize);
-    spawnTree(tmpTree, 0);
+    initializeWorld();
 }
 
 GameScene::~GameScene()
@@ -33,6 +26,25 @@ GameScene::~GameScene()
         delete this->entities[i];
         this->entities.pop_back();
     }
+}
+
+void GameScene::initializeWorld()
+{
+    
+    // DEBUG:
+    sf::Vector2<float> testPos = {20.f, 10.f};
+    sf::Vector2<float> testSize = {300.f, 300.f};
+    Entity* tmpPlayer = new PlayerEntity(testPos, testSize);
+    this->player = (PlayerEntity*)tmpPlayer;
+    spawnEntity(tmpPlayer);
+
+    int treeLengths[8]{2, 1, 2, 0, 2, 1, 1, 0};
+    for(int i = 0; i < 8; i++)
+    {
+        Tree* tmpTree = new Tree(treeLengths[i], this->tileSize);
+        spawnTree(tmpTree, i);
+    }
+    // Thank you for listening to my debug.
 }
 
 void GameScene::spawnEntity(Entity* entity)

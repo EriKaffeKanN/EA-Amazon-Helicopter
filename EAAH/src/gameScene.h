@@ -35,12 +35,13 @@ public:
 private:
     void spawnEntity(Entity* entity);
     void spawnTree(Tree* tree, int tileX);
+    void initializeWorld();
 
     PlayerEntity* player;
     std::vector<Entity*> entities;
     std::vector<Tree*> trees;
 
-    const float tileSize = 720.f;
+    const float tileSize = 160.f;
 };
 
 #endif
