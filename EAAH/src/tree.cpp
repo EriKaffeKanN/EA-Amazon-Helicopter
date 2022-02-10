@@ -54,7 +54,15 @@ void Tree::spawn(int tileX)
 
 void Tree::grow()
 {
-
+    sf::Sprite* log = new sf::Sprite;
+    log->setTexture(this->logTexture);
+    log->setScale(
+        this->size / this->logTexture.getSize().x,
+        this->size / this->logTexture.getSize().y
+    );
+    log->setPosition(this->pos.x, this->pos.y - this->length*this->size);
+    this->length += 1;
+    this->logs.push_back(log);
 }
 
 void Tree::fall()
