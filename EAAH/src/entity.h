@@ -18,9 +18,13 @@ public:
     virtual void update();
     virtual void onCollision(GameScene::CollisionPacket packet);
 
+    virtual int getTilePos();
+
     sf::Vector2<float> pos;
     sf::Vector2<float> velocity;
     sf::Vector2<float> size;
+
+    bool dead;
 
 protected:
     SpriteSheet* spriteSheet;

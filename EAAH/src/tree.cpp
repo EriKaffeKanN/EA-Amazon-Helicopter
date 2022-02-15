@@ -57,6 +57,7 @@ void Tree::spawn(int tileX)
 
 void Tree::grow()
 {
+    std::cout << "lol?" << std::endl;
     sf::Sprite* log = new sf::Sprite;
     log->setTexture(this->logTexture);
     log->setScale(
@@ -66,6 +67,14 @@ void Tree::grow()
     log->setPosition(this->pos.x, this->pos.y - this->length*this->size);
     this->length += 1;
     this->logs.push_back(log);
+}
+
+void Tree::onCollision(GameScene::CollisionPacket packet)
+{
+    if(packet.collider == GameScene::CollisionPacket::FERTILIZER){
+        std::cout << "johnus \n";
+        this->grow();
+    }
 }
 
 void Tree::fall()

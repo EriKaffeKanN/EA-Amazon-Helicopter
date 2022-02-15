@@ -19,6 +19,7 @@ public:
     void onSwitchFrom() override final;
 
     static const float groundLevel;
+    static const float tileSize;
 
     struct CollisionPacket
     {
@@ -36,12 +37,11 @@ private:
     void spawnEntity(Entity* entity);
     void spawnTree(Tree* tree, int tileX);
     void initializeWorld();
+    void sweepEntities();
 
     PlayerEntity* player;
     std::vector<Entity*> entities;
     std::vector<Tree*> trees;
-
-    const float tileSize = 160.f;
 };
 
 #endif

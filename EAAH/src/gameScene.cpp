@@ -11,6 +11,7 @@
 #include <iostream>
 
 const float GameScene::groundLevel = 560.f;
+const float GameScene::tileSize = 160.f;
 
 GameScene::GameScene()
     : Scene (SceneManager::Scenes::GAME,
@@ -62,6 +63,7 @@ void GameScene::spawnTree(Tree* tree, int tileX)
 
 void GameScene::update()
 {
+    this->sweepEntities();
     // Game logic
     for(Entity* entity: this->entities)
     {
@@ -132,6 +134,18 @@ GameScene::CollisionPacket getEntityCollisionPacket (Entity* entity)
     return packet;
 }
 
+void GameScene::sweepEntities()
+{
+    for(int i = 0; i < this->entities.size(); i++)
+    {
+        if(this->entities[i]->dead)
+        {
+            this->entities.erase(this->entities.begin() + i);
+            i++;
+        }
+    }
+}
+
 void GameScene::checkCollisions ()
 {
     // Entities with entities
@@ -167,8 +181,10 @@ void GameScene::checkCollisions ()
 
             if (box1.intersects (box2))
             {
+                if(typeid(*this->entities[i]) == typeid(BombEntity))
+                    this->trees[j]->onCollision({GameScene::CollisionPacket::FERTILIZER});
                 GameScene::CollisionPacket packet = {GameScene::CollisionPacket::TREE};
-                this->entities [i]->onCollision (packet);
+                this->entities[i]->onCollision(packet);
             }
         }
     }
