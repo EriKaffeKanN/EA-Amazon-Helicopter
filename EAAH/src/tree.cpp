@@ -29,19 +29,24 @@ void Tree::spawn(int tileX)
     {
         std::cerr << "Failed to retrieve " << this->stumpTexturePath << std::endl;
     }
+    if(!this->crownTexture.loadFromFile(this->crownTexturePath))
+    {
+        std::cerr << "Failed to retrieve " << this->crownTexturePath << std::endl;
+    }
     if(!this->logTexture.loadFromFile(this->logTexturePath))
     {
         std::cerr << "Failed to retrieve " << this->logTexturePath << std::endl;
     }
 
+    // Stump
     this->stump.setTexture(this->stumpTexture);
-    // Scale to size
     this->stump.setScale(
         this->size / this->stumpTexture.getSize().x,
         this->size / this->stumpTexture.getSize().y
     );
     this->stump.setPosition(this->pos);
 
+    // Logs
     for(int i = 1; i <= this->length; i++)
     {
         sf::Sprite* log = new sf::Sprite;
@@ -53,11 +58,20 @@ void Tree::spawn(int tileX)
         log->setPosition(this->pos.x, this->pos.y - i*this->size);
         this->logs.push_back(log);
     }
+
+    // Crown
+    this->crown.setTexture(this->crownTexture);
+    this->crown.setScale(
+        this->size / this->stumpTexture.getSize().x,
+        this->size / this->stumpTexture.getSize().y
+    );
+    this->crown.setPosition(this->pos.x - (this->size/2), this->pos.y - (this->length+2)*this->size);
 }
 
 void Tree::grow()
 {
-    std::cout << "lol?" << std::endl;
+    this->length += 1;
+    // Spawn new log
     sf::Sprite* log = new sf::Sprite;
     log->setTexture(this->logTexture);
     log->setScale(
@@ -65,14 +79,15 @@ void Tree::grow()
         this->size / this->logTexture.getSize().y
     );
     log->setPosition(this->pos.x, this->pos.y - this->length*this->size);
-    this->length += 1;
     this->logs.push_back(log);
+
+    // Raise tree crown
+    this->crown.setPosition(this->pos.x - (this->size/2), this->pos.y - (this->length+2)*this->size);
 }
 
 void Tree::onCollision(GameScene::CollisionPacket packet)
 {
     if(packet.collider == GameScene::CollisionPacket::FERTILIZER){
-        std::cout << "johnus \n";
         this->grow();
     }
 }

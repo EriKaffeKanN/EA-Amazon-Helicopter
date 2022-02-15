@@ -23,11 +23,14 @@ public:
     int length;
     sf::Vector2<float> pos;
     sf::Sprite stump;
+    sf::Sprite crown;
     std::vector<sf::Sprite*> logs;
 private:
     sf::Texture stumpTexture;
+    sf::Texture crownTexture;
     sf::Texture logTexture;
     const char* stumpTexturePath = "../resources/textures/stump.png";
+    const char* crownTexturePath = "../resources/textures/crown.png";
     const char* logTexturePath = "../resources/textures/log.png";
 
 };

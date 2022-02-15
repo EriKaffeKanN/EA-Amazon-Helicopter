@@ -8,7 +8,7 @@ BombEntity::BombEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
 
 void BombEntity::update()
 {
-    this->velocity.y += 0.1f;
+    this->velocity.y += 0.01f;
     if(this->velocity.y > 5.f)
     {
         this->velocity.y = 5.f;
@@ -18,6 +18,8 @@ void BombEntity::update()
 
 void BombEntity::onCollision(GameScene::CollisionPacket packet)
 {
-    std::cout << "dead lol\n";
-    this->dead = true;
+    if(packet.collider == GameScene::CollisionPacket::TREE)
+    {
+        this->dead = true;
+    }
 }

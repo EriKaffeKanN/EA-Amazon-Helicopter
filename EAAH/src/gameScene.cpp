@@ -11,7 +11,7 @@
 #include <iostream>
 
 const float GameScene::groundLevel = 560.f;
-const float GameScene::tileSize = 160.f;
+const float GameScene::tileSize = 80.f;
 
 GameScene::GameScene()
     : Scene (SceneManager::Scenes::GAME,
@@ -34,13 +34,14 @@ void GameScene::initializeWorld()
     
     // DEBUG:
     sf::Vector2<float> testPos = {20.f, 10.f};
-    sf::Vector2<float> testSize = {300.f, 300.f};
+    sf::Vector2<float> testSize = {200.f, 110.f};
     Entity* tmpPlayer = new PlayerEntity(testPos, testSize);
     this->player = (PlayerEntity*)tmpPlayer;
     spawnEntity(tmpPlayer);
 
-    int treeLengths[8]{2, 1, 2, 0, 2, 1, 1, 0};
-    for(int i = 0; i < 8; i++)
+    const int treeAmt = 16;
+    int treeLengths[treeAmt]{2, 1, 2, 0, 2, 1, 1, 0, 1, 3, 2, 0, 2, 1, 3, 0};
+    for(int i = 0; i < treeAmt; i++)
     {
         Tree* tmpTree = new Tree(treeLengths[i], this->tileSize);
         spawnTree(tmpTree, i);
@@ -95,6 +96,7 @@ void GameScene::update()
         {
             game.window.draw(*log);
         }
+        game.window.draw(tree->crown);
     }
 
     this->checkCollisions ();
@@ -102,8 +104,8 @@ void GameScene::update()
     // Input
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) && this->player->bombCooldown <= 0)
     {
-        sf::Vector2<float> bombPos = {player->pos.x + player->size.x/2.f - 32.f, player->pos.y + 200.f};
-        sf::Vector2<float> bombSize = {64.f, 64.f};
+        sf::Vector2<float> bombPos = {player->pos.x + (player->size.x/2.f) - (32.f/2.f), player->pos.y + (player->size.y/2.f)};
+        sf::Vector2<float> bombSize = {32.f, 32.f};
         Entity* bomb = new BombEntity(bombPos, bombSize);
         spawnEntity(bomb);
         this->player->bombCooldown = 1.f;
@@ -177,14 +179,16 @@ void GameScene::checkCollisions ()
         {
             sf::FloatRect box2 (this->trees [j]->pos,
                     sf::Vector2f (this->trees [j]->size,
-                        this->trees [j]->size * this->trees [j]->length));
+                        this->trees [j]->size * (this->trees [j]->length + 1))); // added + 1 to also account for the tree stump
 
             if (box1.intersects (box2))
             {
                 if(typeid(*this->entities[i]) == typeid(BombEntity))
+                {
                     this->trees[j]->onCollision({GameScene::CollisionPacket::FERTILIZER});
-                GameScene::CollisionPacket packet = {GameScene::CollisionPacket::TREE};
-                this->entities[i]->onCollision(packet);
+                    GameScene::CollisionPacket packet = {GameScene::CollisionPacket::TREE};
+                    this->entities[i]->onCollision(packet);
+                }
             }
         }
     }
