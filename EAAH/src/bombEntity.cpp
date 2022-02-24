@@ -3,7 +3,7 @@
 BombEntity::BombEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
     : Entity(pos, size)
 {
-    this->spriteSheet = new SpriteSheet("../resources/textures/fertilizer.png", this->size, sf::Vector2<int>(74, 74), 1, 0.3f);
+    this->spriteSheet = new SpriteSheet("../resources/textures/fertilizer.png", this->size, sf::Vector2<int>(74, 74), new int[1]{1}, 1, 0.3f);
 }
 
 void BombEntity::update()

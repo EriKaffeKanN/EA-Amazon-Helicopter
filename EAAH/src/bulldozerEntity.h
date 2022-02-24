@@ -18,6 +18,12 @@ public:
         HUNT,
         ATTACK
     };
+    enum class Animations
+    {
+        MOVING,
+        DIGGING,
+        IDLE
+    };
 private:
     void roam();
     void hunt();

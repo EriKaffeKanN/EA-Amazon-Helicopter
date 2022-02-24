@@ -7,7 +7,7 @@
 BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
     : Entity(pos, size)
 {
-    spriteSheet = new SpriteSheet("../resources/textures/bulldozer_moving.png", this->size, sf::Vector2<int>(64, 64), 3, 0.3f);
+    spriteSheet = new SpriteSheet("../resources/textures/bulldozer.png", this->size, sf::Vector2<int>(64, 64), new int[3]{3, 13, 3}, 3, 0.3f);
     currentBehaviour = BulldozerEntity::Behaviour::ROAM;
 }
 
@@ -40,11 +40,13 @@ void BulldozerEntity::roam()
         if(stop)
         {
             this->standStill = true;
+            this->spriteSheet->currentAnimation = (int)Animations::IDLE;
             this->timeUntilChangeDirection = (rand() % 4) + 2; // dont wait for too long
         }
         else
         {
             this->standStill = false;
+            this->spriteSheet->currentAnimation = (int)Animations::MOVING;
             this->spriteSheet->switchDirection();
             this->timeUntilChangeDirection = (rand() % 8) + 2;
         }

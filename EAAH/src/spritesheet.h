@@ -10,7 +10,8 @@
 class SpriteSheet
 {
 public:
-    SpriteSheet(const char* texturePath, sf::Vector2<float> size, sf::Vector2<int> frameSize, int animationSize, float animationLength);
+    SpriteSheet(const char* texturePath, sf::Vector2<float> size, sf::Vector2<int> frameSize, int* animationSizes, int numberOfAnimations, float animationLength);
+    ~SpriteSheet();
     void loadSprite();
     void update(sf::Vector2<float>& pos);
     void setDirection(Direction dir);
@@ -21,7 +22,9 @@ public:
     sf::Sprite sprite;
 
     int currentFrame;
-    int animationSize;
+    int currentAnimation;
+    int numberOfAnimations; // The amount of animations in the spritesheet
+    int* animationSizes; // The amount of frames in each animation in the spritesheet
     float offsetX; // This exists because I can't set the origin properly.
     float animationLength; // The length of the animation in seconds
     float animationCounter; // How far along the animation has played
