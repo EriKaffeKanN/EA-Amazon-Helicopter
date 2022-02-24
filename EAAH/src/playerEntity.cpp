@@ -14,14 +14,14 @@ void PlayerEntity::update()
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
         this->velocity.x = 0.3f;
-        this->spriteSheet->setDirection(Direction::Right);
+        this->spriteSheet->setDirection(Direction::RIGHT);
 
     }
     
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
         this->velocity.x = -0.3f;
-        this->spriteSheet->setDirection(Direction::Left);
+        this->spriteSheet->setDirection(Direction::LEFT);
     }
 
     if(bombCooldown > 0)

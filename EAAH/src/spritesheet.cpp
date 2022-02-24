@@ -55,14 +55,14 @@ void SpriteSheet::setDirection(Direction dir)
 {
     switch (dir)
     {
-    case Direction::Left:
+    case Direction::LEFT:
         this->sprite.setScale(
             std::abs(this->sprite.getScale().x),
             this->sprite.getScale().y
             );
         this->offsetX = 0;
         break;
-    case Direction::Right:
+    case Direction::RIGHT:
         this->sprite.setScale(
             -std::abs(this->sprite.getScale().x),
             this->sprite.getScale().y
@@ -70,4 +70,23 @@ void SpriteSheet::setDirection(Direction dir)
         this->offsetX = this->size.x;
         break;
     }
+}
+
+Direction SpriteSheet::getDirection()
+{
+    if(this->sprite.getScale().x > 0)
+    {
+        return Direction::LEFT;
+    }
+    else
+    {
+        return Direction::RIGHT;
+    }
+}
+
+void SpriteSheet::switchDirection()
+{
+    if(this->getDirection() == Direction::LEFT)
+        this->setDirection(Direction::RIGHT);
+    this->setDirection(Direction::LEFT);
 }

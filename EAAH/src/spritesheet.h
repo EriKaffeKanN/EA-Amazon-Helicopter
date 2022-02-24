@@ -14,6 +14,8 @@ public:
     void loadSprite();
     void update(sf::Vector2<float>& pos);
     void setDirection(Direction dir);
+    void switchDirection();
+    Direction getDirection();
 
     sf::Texture texture;
     sf::Sprite sprite;

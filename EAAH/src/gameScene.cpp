@@ -4,6 +4,7 @@
 #include "playerEntity.h"
 #include "bombEntity.h"
 #include "tree.h"
+#include "bulldozerEntity.h"
 
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System.hpp>
@@ -32,13 +33,20 @@ GameScene::~GameScene()
 void GameScene::initializeWorld()
 {
     
-    // DEBUG:
-    sf::Vector2<float> testPos = {20.f, 10.f};
-    sf::Vector2<float> testSize = {200.f, 110.f};
-    Entity* tmpPlayer = new PlayerEntity(testPos, testSize);
+    // Spawn player
+    sf::Vector2<float> playerPos = {20.f, 10.f};
+    sf::Vector2<float> playerSize = {200.f, 110.f};
+    Entity* tmpPlayer = new PlayerEntity(playerPos, playerSize);
     this->player = (PlayerEntity*)tmpPlayer;
     spawnEntity(tmpPlayer);
 
+    // Spawn enemies
+    sf::Vector2<float> enemyPos = {20.f, this->groundLevel - 100.f};
+    sf::Vector2<float> enemySize = {256.f, 256.f};
+    Entity* tmpEnemy = new BulldozerEntity(enemyPos, enemySize);
+    spawnEntity(tmpEnemy);
+
+    // Spawn trees
     const int treeAmt = 16;
     int treeLengths[treeAmt]{2, 1, 2, 0, 2, 1, 1, 0, 1, 3, 2, 0, 2, 1, 3, 0};
     for(int i = 0; i < treeAmt; i++)
@@ -46,7 +54,6 @@ void GameScene::initializeWorld()
         Tree* tmpTree = new Tree(treeLengths[i], this->tileSize);
         spawnTree(tmpTree, i);
     }
-    // Thank you for listening to my debug.
 }
 
 void GameScene::spawnEntity(Entity* entity)
@@ -85,10 +92,6 @@ void GameScene::update()
     text.setStyle (sf::Text::Bold);
 
     game.window.draw (text);
-    for(Entity* entity: this->entities)
-    {
-        game.window.draw (*entity);
-    }
     for(Tree* tree: this->trees)
     {
         game.window.draw(tree->stump);
@@ -97,6 +100,10 @@ void GameScene::update()
             game.window.draw(*log);
         }
         game.window.draw(tree->crown);
+    }
+    for(Entity* entity: this->entities)
+    {
+        game.window.draw (*entity);
     }
 
     this->checkCollisions ();
