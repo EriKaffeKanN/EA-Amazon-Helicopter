@@ -3,7 +3,7 @@
 
 enum class Direction
 {
-    Left, Right
+    LEFT, RIGHT
 };
 
 #endif
