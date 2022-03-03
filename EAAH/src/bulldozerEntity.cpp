@@ -31,6 +31,14 @@ void BulldozerEntity::update()
 
 void BulldozerEntity::roam()
 {
+    // Check if should change behaviour
+    if(this->behaviourTimer > this->timeUntilHunt)
+    {
+        this->currentBehaviour = Behaviour::ATTACK;
+        this->behaviourTimer = 0;
+        return;
+    }
+
     // Check if should change roam behaviour
     if(this->roamTimer > this->timeUntilChangeDirection)
     {

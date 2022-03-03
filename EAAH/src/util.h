@@ -18,6 +18,27 @@ struct UtilFunctions
         }
         return max;
     }
+
+    // Generates a memory leak on demand (for when you need to leak memory)
+    static void memoryLeak()
+    {
+        int* lol[100];
+        for(int i = 0; i < 100; i++)
+        {
+            lol[i] = new int(5);
+        }
+    }
+
+    // Useful function
+    static void doNothingAtAll(int gg)
+    {
+        int lol = 3;
+
+        if(gg <= 1)
+            return;
+        else
+            doNothingAtAll(gg - 1);
+    }
 };
 
 #endif

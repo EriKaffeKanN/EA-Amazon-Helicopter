@@ -29,6 +29,8 @@ private:
     void hunt();
     void attack();
 
+    float behaviourTimer = 0.f;
+
     // Roaming variables
     float roamTimer = 0.f; // timer
     float timeUntilChangeDirection = 2.f; // decides when to change direction or stop while roaming
