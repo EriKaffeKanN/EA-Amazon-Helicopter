@@ -92,7 +92,16 @@ void Tree::onCollision(GameScene::CollisionPacket packet)
     }
 }
 
-void Tree::fall()
+bool Tree::destroyLog()
 {
-    // TODO: delete all logs
+    if(this->length > 0)
+    {
+        delete this->logs[this->length - 1];
+        this->logs.pop_back();
+        this->length -= 1;
+        // Lower tree crown
+        this->crown.setPosition(this->pos.x - (this->size/2), this->pos.y - (this->length+2)*this->size);
+        return true;
+    }
+    return false;
 }

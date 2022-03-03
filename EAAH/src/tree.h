@@ -15,7 +15,7 @@ public:
     
     void spawn(int tileX);
     void grow();
-    void fall();
+    bool destroyLog();
     void onCollision(GameScene::CollisionPacket packet);
 
     int size;

@@ -3,12 +3,20 @@
 #include "util.h"
 
 #include <random>
+#include <iostream>
+#include <cmath>
 
-BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
+BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size, std::vector<Tree*>* treesRef)
     : Entity(pos, size)
 {
-    spriteSheet = new SpriteSheet("../resources/textures/bulldozer.png", this->size, sf::Vector2<int>(64, 64), new int[3]{3, 13, 3}, 3, 0.3f);
-    currentBehaviour = BulldozerEntity::Behaviour::ROAM;
+    this->treesRef = treesRef;
+    this->spriteSheet = new SpriteSheet("../resources/textures/bulldozer.png", this->size, sf::Vector2<int>(64, 64), new int[3]{3, 13, 3}, 3, 0.3f);
+    this->currentBehaviour = BulldozerEntity::Behaviour::ROAM;
+}
+
+BulldozerEntity::~BulldozerEntity()
+{
+    delete this->treesRef;
 }
 
 void BulldozerEntity::update()
@@ -26,7 +34,35 @@ void BulldozerEntity::update()
             break;
 
     }
+    this->behaviourTimer += game.ft;
     Entity::update();
+}
+
+void BulldozerEntity::onCollision(GameScene::CollisionPacket packet)
+{
+    // Get squashed...
+}
+
+void BulldozerEntity::changeBehaviour(Behaviour behaviour)
+{
+    this->behaviourTimer = 0;
+    this->currentBehaviour = behaviour;
+    switch(behaviour)
+    {
+        case Behaviour::HUNT:
+            this->selectTarget();
+            this->spriteSheet->currentAnimation = (int)Animations::MOVING;
+            break;
+        case Behaviour::ROAM:
+            this->timeUntilHunt = (rand() % 20) + 5.f;
+            this->standStill = false;
+            this->spriteSheet->currentAnimation = (int)Animations::MOVING;
+            break;
+        case Behaviour::ATTACK:
+            this->timeUntilRoam = (rand() % 3) + 3.f;
+            break;
+
+    }
 }
 
 void BulldozerEntity::roam()
@@ -34,8 +70,7 @@ void BulldozerEntity::roam()
     // Check if should change behaviour
     if(this->behaviourTimer > this->timeUntilHunt)
     {
-        this->currentBehaviour = Behaviour::ATTACK;
-        this->behaviourTimer = 0;
+        changeBehaviour(Behaviour::HUNT);
         return;
     }
 
@@ -86,12 +121,76 @@ void BulldozerEntity::roam()
     this->roamTimer += game.ft;
 }
 
+void BulldozerEntity::selectTarget()
+{
+    if(this->treesRef == nullptr)
+    {
+        std::cerr << "No trees to search for!\n";
+        return;
+    }
+
+    // Sort all non-dead trees
+    std::vector<Tree*> aliveTrees;
+    for(Tree* tree: *this->treesRef)
+    {
+        if(tree->length > 0)
+            aliveTrees.push_back(tree);
+    }
+
+    // Select random alive tree
+    int treeAmt = aliveTrees.size();
+    int treeIndex = rand() % treeAmt;
+    this->targetTree = aliveTrees[treeIndex];
+}
+
 void BulldozerEntity::hunt()
 {
+    if(this->targetTree == nullptr)
+    {
+        std::cerr << "Hunt began before any tree was chosen!\n";
+        return;
+    }
 
+    // Move towards tree
+    if(this->pos.x > this->targetTree->pos.x - 120.f) // offset by 80 pixels (for visual purposes)
+    {
+        this->spriteSheet->setDirection(Direction::LEFT);
+        this->pos.x -= this->huntSpeed;
+    }
+    else
+    {
+        this->spriteSheet->setDirection(Direction::RIGHT);
+        this->pos.x += this->huntSpeed;
+    }
+
+    // Check if close to tree
+    if(std::abs(this->pos.x - (this->targetTree->pos.x - 120.f)) < 20.f)
+    {
+        changeBehaviour(Behaviour::ATTACK);
+    }
 }
 
 void BulldozerEntity::attack()
 {
+    this->spriteSheet->currentAnimation = (int)Animations::DIGGING;
 
+    // See if should change behaviour
+    if(this->behaviourTimer > this->timeUntilRoam)
+    {
+        changeBehaviour(Behaviour::ROAM);
+    }
+
+    // See if should break log
+    if(this->attackTimer > this->timeUntilDestoryLog)
+    {
+        this->attackTimer = 0.f;
+        if(!this->targetTree->destroyLog())
+        {
+            // If this part is reached, the tree is dead
+            changeBehaviour(Behaviour::ROAM);
+            return;
+        }
+    }
+
+    this->attackTimer += game.ft;
 }

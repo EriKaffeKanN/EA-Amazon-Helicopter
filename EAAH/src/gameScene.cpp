@@ -37,14 +37,8 @@ void GameScene::initializeWorld()
     sf::Vector2<float> playerPos = {20.f, 10.f};
     sf::Vector2<float> playerSize = {200.f, 110.f};
     Entity* tmpPlayer = new PlayerEntity(playerPos, playerSize);
-    this->player = (PlayerEntity*)tmpPlayer;
+    this->player = (PlayerEntity*)tmpPlayer; // store player in this->entities as well as this->player for easy access
     spawnEntity(tmpPlayer);
-
-    // Spawn enemies
-    sf::Vector2<float> enemyPos = {20.f, this->groundLevel - 100.f};
-    sf::Vector2<float> enemySize = {256.f, 256.f};
-    Entity* tmpEnemy = new BulldozerEntity(enemyPos, enemySize);
-    spawnEntity(tmpEnemy);
 
     // Spawn trees
     const int treeAmt = 16;
@@ -54,6 +48,12 @@ void GameScene::initializeWorld()
         Tree* tmpTree = new Tree(treeLengths[i], this->tileSize);
         spawnTree(tmpTree, i);
     }
+
+    // Spawn enemies
+    sf::Vector2<float> enemyPos = {20.f, this->groundLevel - 100.f};
+    sf::Vector2<float> enemySize = {256.f, 256.f};
+    Entity* tmpEnemy = new BulldozerEntity(enemyPos, enemySize, &this->trees);
+    spawnEntity(tmpEnemy);
 }
 
 void GameScene::spawnEntity(Entity* entity)
