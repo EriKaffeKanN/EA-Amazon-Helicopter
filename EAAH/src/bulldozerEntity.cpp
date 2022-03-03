@@ -12,6 +12,20 @@ BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size
     this->treesRef = treesRef;
     this->spriteSheet = new SpriteSheet("../resources/textures/bulldozer.png", this->size, sf::Vector2<int>(64, 64), new int[3]{3, 13, 3}, 3, 0.3f);
     this->currentBehaviour = BulldozerEntity::Behaviour::ROAM;
+
+    // Initialize behaviour variables
+    //     Roaming
+    this->roamTimer = 0.f;
+    this->timeUntilChangeDirection = this->timeUntilChangeDirection = (rand() % 4) + 2;
+    this->timeUntilHunt = (rand() % 10) + 5.f;
+    this->roamSpeed = 0.2f;
+    this->standStill = false;
+    //     Hunting
+    this->huntSpeed = 0.5f;
+    //     Attacking
+    this->attackTimer = 0.f;
+    this->timeUntilDestoryLog = 0.8f;
+    this->timeUntilRoam = (rand() % 3) + 3.f;
 }
 
 BulldozerEntity::~BulldozerEntity()
@@ -54,7 +68,7 @@ void BulldozerEntity::changeBehaviour(Behaviour behaviour)
             this->spriteSheet->currentAnimation = (int)Animations::MOVING;
             break;
         case Behaviour::ROAM:
-            this->timeUntilHunt = (rand() % 20) + 5.f;
+            this->timeUntilHunt = (rand() % 10) + 5.f;
             this->standStill = false;
             this->spriteSheet->currentAnimation = (int)Animations::MOVING;
             break;

@@ -40,22 +40,22 @@ private:
     std::vector<Tree*>* treesRef; // so each bulldozer knows where each tree is
     Tree* targetTree;
 
-    float behaviourTimer = 0.f;
+    float behaviourTimer;
 
     // Roaming variables
-    float roamTimer = 0.f; // timer
-    float timeUntilChangeDirection = 2.f; // decides when to change direction or stop while roaming
-    float timeUntilHunt = 7.f; // decides when to start hunting trees
-    float roamSpeed = 0.2f; // How many pixels / second the bulldozer moves each frame
-    bool standStill = false;
+    float roamTimer; // timer
+    float timeUntilChangeDirection; // decides when to change direction or stop while roaming
+    float timeUntilHunt; // decides when to start hunting trees
+    float roamSpeed; // How many pixels / second the bulldozer moves each frame
+    bool standStill;
 
     // Hunting variables
-    float huntSpeed = 0.5f;
+    float huntSpeed;
 
     // Attacking variables
-    float attackTimer = 0.f; // timer for destorying logs
-    float timeUntilDestoryLog = 0.8f;
-    float timeUntilRoam = 3.f;
+    float attackTimer; // timer for destorying logs
+    float timeUntilDestoryLog;
+    float timeUntilRoam;
 
 
     Behaviour currentBehaviour;

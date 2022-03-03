@@ -50,10 +50,20 @@ void GameScene::initializeWorld()
     }
 
     // Spawn enemies
-    sf::Vector2<float> enemyPos = {20.f, this->groundLevel - 100.f};
-    sf::Vector2<float> enemySize = {256.f, 256.f};
-    Entity* tmpEnemy = new BulldozerEntity(enemyPos, enemySize, &this->trees);
-    spawnEntity(tmpEnemy);
+    sf::Vector2<float> enemy1Pos = {20.f, this->groundLevel - 100.f};
+    sf::Vector2<float> enemy1Size = {256.f, 256.f};
+    Entity* tmpEnemy1 = new BulldozerEntity(enemy1Pos, enemy1Size, &this->trees);
+    spawnEntity(tmpEnemy1);
+
+    sf::Vector2<float> enemy2Pos = {140.f, this->groundLevel - 100.f};
+    sf::Vector2<float> enemy2Size = {256.f, 256.f};
+    Entity* tmpEnemy2 = new BulldozerEntity(enemy2Pos, enemy2Size, &this->trees);
+    spawnEntity(tmpEnemy2);
+
+    sf::Vector2<float> enemy3Pos = {240.f, this->groundLevel - 100.f};
+    sf::Vector2<float> enemy3Size = {256.f, 256.f};
+    Entity* tmpEnemy3 = new BulldozerEntity(enemy3Pos, enemy3Size, &this->trees);
+    spawnEntity(tmpEnemy3);
 }
 
 void GameScene::spawnEntity(Entity* entity)
@@ -99,7 +109,8 @@ void GameScene::update()
         {
             game.window.draw(*log);
         }
-        game.window.draw(tree->crown);
+        if(tree->length > 0)
+            game.window.draw(tree->crown);
     }
     for(Entity* entity: this->entities)
     {
