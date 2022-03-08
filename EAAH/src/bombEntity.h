@@ -13,6 +13,8 @@ public:
 
     void update() override final;
     void onCollision(GameScene::CollisionPacket packet) override final;
+private:
+    float acceleration = 1.f;
 };
 
 #endif

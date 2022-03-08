@@ -2,6 +2,7 @@
 #define TREE_H_
 
 #include "gameScene.h"
+#include "particles.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -15,6 +16,7 @@ public:
     
     void spawn(int tileX);
     void grow();
+    void update();
     bool destroyLog();
     void onCollision(GameScene::CollisionPacket packet);
 
@@ -25,6 +27,9 @@ public:
     sf::Sprite stump;
     sf::Sprite crown;
     std::vector<sf::Sprite*> logs;
+    Particles* particles;
+    
+    bool growing;
 private:
     sf::Texture stumpTexture;
     sf::Texture crownTexture;
@@ -33,6 +38,8 @@ private:
     const char* crownTexturePath = "../resources/textures/crown.png";
     const char* logTexturePath = "../resources/textures/log.png";
 
+    float growingTimer;
+    float timeUntilGrow;
 };
 
 #endif

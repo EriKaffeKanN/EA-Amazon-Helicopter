@@ -1,5 +1,6 @@
 #include "tree.h"
 #include "gameScene.h"
+#include "game.h"
 
 #include <iostream>
 
@@ -7,6 +8,16 @@ Tree::Tree(int length, int size)
 {
     this->length = length;
     this->size = size;
+
+    this->growing = false;
+    this->growingTimer = 0.f;
+    this->timeUntilGrow = 3.f;
+
+    sf::Vector2<float> particlesSize(
+        GameScene::tileSize,
+        GameScene::tileSize
+    );
+    this->particles = new Particles(this->pos, particlesSize);
 }
 
 Tree::~Tree()
@@ -15,6 +26,22 @@ Tree::~Tree()
     {
         delete this->logs[i];
         this->logs.pop_back();
+    }
+    delete this->particles;
+}
+
+void Tree::update()
+{
+    if(this->growing)
+    {
+        this->particles->update();
+        if(this->growingTimer > this->timeUntilGrow)
+        {
+            this->grow();
+            this->growingTimer = 0.f;
+            this->growing = false;
+        }
+        this->growingTimer += game.ft;
     }
 }
 
@@ -88,7 +115,7 @@ void Tree::grow()
 void Tree::onCollision(GameScene::CollisionPacket packet)
 {
     if(packet.collider == GameScene::CollisionPacket::FERTILIZER){
-        this->grow();
+        this->growing = true;
     }
 }
 

@@ -16,6 +16,7 @@ public:
     void update() override final;
 
     float bombCooldown = 0;
+    float moveSpeed = 160.f;
 };
 
 #endif
