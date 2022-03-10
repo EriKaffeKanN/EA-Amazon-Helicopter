@@ -11,7 +11,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-const float GameScene::groundLevel = 560.f;
+const float GameScene::groundLevel = 620.f;
 const float GameScene::tileSize = 80.f;
 
 GameScene::GameScene()
@@ -53,20 +53,11 @@ void GameScene::initializeWorld()
     }
 
     // Spawn enemies
-    sf::Vector2<float> enemy1Pos = {20.f, this->groundLevel - 100.f};
-    sf::Vector2<float> enemy1Size = {256.f, 256.f};
-    Entity* tmpEnemy1 = new BulldozerEntity(enemy1Pos, enemy1Size, &this->trees);
-    spawnEntity(tmpEnemy1);
-
-    sf::Vector2<float> enemy2Pos = {140.f, this->groundLevel - 100.f};
-    sf::Vector2<float> enemy2Size = {256.f, 256.f};
-    Entity* tmpEnemy2 = new BulldozerEntity(enemy2Pos, enemy2Size, &this->trees);
-    spawnEntity(tmpEnemy2);
-
-    sf::Vector2<float> enemy3Pos = {240.f, this->groundLevel - 100.f};
-    sf::Vector2<float> enemy3Size = {256.f, 256.f};
-    Entity* tmpEnemy3 = new BulldozerEntity(enemy3Pos, enemy3Size, &this->trees);
-    spawnEntity(tmpEnemy3);
+    for(int i = 0; i < 3; i++)
+    {
+        float posX = (rand() % 1000) + 30.f;
+        spawnEnemy(posX);
+    }
 }
 
 void GameScene::spawnEntity(Entity* entity)
@@ -82,42 +73,53 @@ void GameScene::spawnTree(Tree* tree, int tileX)
     this->trees.back()->spawn(tileX);
 }
 
+void GameScene::spawnEnemy(float posX)
+{
+    sf::Vector2<float> enemyPos = {posX, this->groundLevel - 100.f};
+    sf::Vector2<float> enemySize = {256.f, 256.f};
+    Entity* tmpEnemy = new BulldozerEntity(enemyPos, enemySize, &this->trees);
+    spawnEntity(tmpEnemy);
+}
+
 void GameScene::update()
 {
     this->sweepEntities();
-    // Game logic
-    for(Entity* entity: this->entities)
-    {
-        entity->update();
-    }
 
     // Drawing
     game.window.draw (this->background);
 
-    sf::Font font;
-    font.loadFromFile ("../resources/fonts/LiberationSans-Regular.ttf");
-
-    sf::Text text;
-    text.setFont (font);
-    text.setString ("Game screen osv");
-    text.setCharacterSize (24);
-    text.setFillColor (sf::Color::White);
-    text.setStyle (sf::Text::Bold);
-
-    game.window.draw (text);
     for(Tree* tree: this->trees)
     {
+        // Stump
         game.window.draw(tree->stump);
+        // Logs
         for(sf::Sprite* log: tree->logs)
         {
             game.window.draw(*log);
         }
+        // Crown
         if(tree->length > 0)
             game.window.draw(tree->crown);
+        // Particles
+        if(tree->growing)
+        {
+            game.window.draw(*tree->particles);
+        }
+    }
+
+    for(Entity* entity: this->entities)
+    {
+        game.window.draw (*entity); // TODO: Find out why things don't always draw properly
+    }
+
+    // Game logic
+    for(Tree* tree: this->trees)
+    {
+        tree->update();
     }
     for(Entity* entity: this->entities)
     {
-        game.window.draw (*entity);
+        entity->update();
     }
 
     this->checkCollisions ();
@@ -136,6 +138,16 @@ void GameScene::update()
         SceneManager::pushScene (
             SceneManager::createScene (SceneManager::Scenes::PAUSE_MENU));
     }
+
+    // Spawn new bulldozer
+    if(this->bulldozerTimer > this->timeUntilSpawnBulldozer)
+    {
+        float posX = (rand() % 2)*2000 - 30.f;
+        spawnEnemy(posX);
+        this->bulldozerTimer = 0.f;
+    }
+
+    this->bulldozerTimer += game.ft;
 }
 
 GameScene::CollisionPacket getEntityCollisionPacket (Entity* entity)

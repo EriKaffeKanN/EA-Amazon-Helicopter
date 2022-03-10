@@ -1,5 +1,6 @@
 #include "tree.h"
 #include "gameScene.h"
+#include "game.h"
 
 #include <iostream>
 
@@ -7,6 +8,10 @@ Tree::Tree(int length, int size)
 {
     this->length = length;
     this->size = size;
+
+    this->growing = false;
+    this->growingTimer = 0.f;
+    this->timeUntilGrow = 3.f;
 }
 
 Tree::~Tree()
@@ -15,6 +20,22 @@ Tree::~Tree()
     {
         delete this->logs[i];
         this->logs.pop_back();
+    }
+    delete this->particles;
+}
+
+void Tree::update()
+{
+    if(this->growing)
+    {
+        this->particles->update();
+        if(this->growingTimer > this->timeUntilGrow)
+        {
+            this->grow();
+            this->growingTimer = 0.f;
+            this->growing = false;
+        }
+        this->growingTimer += game.ft;
     }
 }
 
@@ -66,6 +87,18 @@ void Tree::spawn(int tileX)
         this->size / this->stumpTexture.getSize().y
     );
     this->crown.setPosition(this->pos.x - (this->size/2), this->pos.y - (this->length+2)*this->size);
+
+    sf::Vector2<float> particlesSize(
+        GameScene::tileSize,
+        GameScene::tileSize
+    );
+    sf::Vector2<float> particlesPos(
+        this->pos.x,
+        this->pos.y
+    );
+
+    this->particles = new Particles(particlesPos, particlesSize);
+    this->particles->loadSprite();
 }
 
 void Tree::grow()
@@ -87,8 +120,8 @@ void Tree::grow()
 
 void Tree::onCollision(GameScene::CollisionPacket packet)
 {
-    if(packet.collider == GameScene::CollisionPacket::FERTILIZER){
-        this->grow();
+    if(packet.collider == GameScene::CollisionPacket::FERTILIZER && this->length != 0){
+        this->growing = true;
     }
 }
 

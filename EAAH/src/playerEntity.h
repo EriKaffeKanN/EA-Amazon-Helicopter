@@ -21,6 +21,7 @@ public:
     sf::Sound spinSound;
 
 private:
+    float moveSpeed = 160.f;
 };
 
 #endif

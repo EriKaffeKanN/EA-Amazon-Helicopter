@@ -37,6 +37,7 @@ public:
     void checkCollisions ();
 private:
     void spawnEntity(Entity* entity);
+    void spawnEnemy(float posX);
     void spawnTree(Tree* tree, int tileX);
     void initializeWorld();
     void sweepEntities();
@@ -46,6 +47,9 @@ private:
     std::vector<Tree*> trees;
 
     sf::Music mainMusic;
+
+    float bulldozerTimer = 0;
+    float timeUntilSpawnBulldozer = 15.f;
 };
 
 #endif

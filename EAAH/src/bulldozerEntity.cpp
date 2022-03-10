@@ -18,10 +18,10 @@ BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size
     this->roamTimer = 0.f;
     this->timeUntilChangeDirection = this->timeUntilChangeDirection = (rand() % 4) + 2;
     this->timeUntilHunt = (rand() % 10) + 5.f;
-    this->roamSpeed = 0.2f;
+    this->roamSpeed = 100.f;
     this->standStill = false;
     //     Hunting
-    this->huntSpeed = 0.5f;
+    this->huntSpeed = 200.f;
     //     Attacking
     this->attackTimer = 0.f;
     this->timeUntilDestoryLog = 0.8f;
@@ -73,6 +73,7 @@ void BulldozerEntity::changeBehaviour(Behaviour behaviour)
             this->spriteSheet->currentAnimation = (int)Animations::MOVING;
             break;
         case Behaviour::ATTACK:
+            this->velocity.x = 0;
             this->timeUntilRoam = (rand() % 3) + 3.f;
             break;
 
@@ -115,12 +116,16 @@ void BulldozerEntity::roam()
         switch(this->spriteSheet->getDirection())
         {
             case Direction::LEFT:
-                this->pos.x -= this->roamSpeed;
+                this->velocity.x = -this->roamSpeed * game.ft;
                 break;
             case Direction::RIGHT:
-                this->pos.x += this->roamSpeed;
+                this->velocity.x = this->roamSpeed * game.ft;
                 break;
         }
+    }
+    else
+    {
+        this->velocity.x = 0.f;
     }
 
     // Check if hit the edges of the map
@@ -150,6 +155,13 @@ void BulldozerEntity::selectTarget()
         if(tree->length > 0)
             aliveTrees.push_back(tree);
     }
+    
+    if(aliveTrees.size() == 0)
+    {
+        // No trees to kill :(
+        changeBehaviour(Behaviour::ROAM);
+        return;
+    }
 
     // Select random alive tree
     int treeAmt = aliveTrees.size();
@@ -162,6 +174,7 @@ void BulldozerEntity::hunt()
     if(this->targetTree == nullptr)
     {
         std::cerr << "Hunt began before any tree was chosen!\n";
+        changeBehaviour(Behaviour::ROAM);
         return;
     }
 
@@ -169,12 +182,12 @@ void BulldozerEntity::hunt()
     if(this->pos.x > this->targetTree->pos.x - 120.f) // offset by 80 pixels (for visual purposes)
     {
         this->spriteSheet->setDirection(Direction::LEFT);
-        this->pos.x -= this->huntSpeed;
+        this->velocity.x = -this->huntSpeed * game.ft;
     }
     else
     {
         this->spriteSheet->setDirection(Direction::RIGHT);
-        this->pos.x += this->huntSpeed;
+        this->velocity.x = this->huntSpeed * game.ft;
     }
 
     // Check if close to tree

@@ -18,14 +18,14 @@ void PlayerEntity::update()
     // Handle input
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
     {
-        this->velocity.x = 0.3f;
+        this->velocity.x = this->moveSpeed * game.ft;
         this->spriteSheet->setDirection(Direction::RIGHT);
 
     }
     
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
-        this->velocity.x = -0.3f;
+        this->velocity.x = -this->moveSpeed * game.ft;
         this->spriteSheet->setDirection(Direction::LEFT);
     }
 
