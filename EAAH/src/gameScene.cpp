@@ -103,6 +103,7 @@ void GameScene::update()
             game.window.draw(*tree->particles);
         }
     }
+
     for(Entity* entity: this->entities)
     {
         game.window.draw (*entity); // TODO: Find out why things don't always draw properly
@@ -138,7 +139,7 @@ void GameScene::update()
     // Spawn new bulldozer
     if(this->bulldozerTimer > this->timeUntilSpawnBulldozer)
     {
-        float posX = (rand() % 1000) + 30.f;
+        float posX = (rand() % 2)*2000 - 30.f;
         spawnEnemy(posX);
         this->bulldozerTimer = 0.f;
     }

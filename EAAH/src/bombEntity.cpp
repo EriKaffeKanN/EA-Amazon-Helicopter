@@ -10,9 +10,9 @@ BombEntity::BombEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
 void BombEntity::update()
 {
     this->velocity.y += this->acceleration * game.ft;
-    if(this->velocity.y > 1.f)
+    if(this->velocity.y > 2.f)
     {
-        this->velocity.y = 1.f;
+        this->velocity.y = 2.f;
     }
     Entity::update();
 }

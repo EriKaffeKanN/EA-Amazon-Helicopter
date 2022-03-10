@@ -12,12 +12,6 @@ Tree::Tree(int length, int size)
     this->growing = false;
     this->growingTimer = 0.f;
     this->timeUntilGrow = 3.f;
-
-    sf::Vector2<float> particlesSize(
-        GameScene::tileSize,
-        GameScene::tileSize
-    );
-    this->particles = new Particles(this->pos, particlesSize);
 }
 
 Tree::~Tree()
@@ -93,6 +87,18 @@ void Tree::spawn(int tileX)
         this->size / this->stumpTexture.getSize().y
     );
     this->crown.setPosition(this->pos.x - (this->size/2), this->pos.y - (this->length+2)*this->size);
+
+    sf::Vector2<float> particlesSize(
+        GameScene::tileSize,
+        GameScene::tileSize
+    );
+    sf::Vector2<float> particlesPos(
+        this->pos.x,
+        this->pos.y
+    );
+
+    this->particles = new Particles(particlesPos, particlesSize);
+    this->particles->loadSprite();
 }
 
 void Tree::grow()
@@ -114,7 +120,7 @@ void Tree::grow()
 
 void Tree::onCollision(GameScene::CollisionPacket packet)
 {
-    if(packet.collider == GameScene::CollisionPacket::FERTILIZER){
+    if(packet.collider == GameScene::CollisionPacket::FERTILIZER && this->length != 0){
         this->growing = true;
     }
 }
