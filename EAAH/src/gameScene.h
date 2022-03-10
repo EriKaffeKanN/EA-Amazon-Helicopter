@@ -3,6 +3,8 @@
 
 #include "scene.h"
 
+#include <SFML/Audio.hpp>
+
 class Entity;
 class PlayerEntity;
 class Tree;
@@ -42,6 +44,8 @@ private:
     PlayerEntity* player;
     std::vector<Entity*> entities;
     std::vector<Tree*> trees;
+
+    sf::Music mainMusic;
 };
 
 #endif

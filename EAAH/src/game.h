@@ -2,6 +2,9 @@
 #define GAME_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+
+#include <unordered_map>
 
 class Game
 {
@@ -15,6 +18,8 @@ public:
     sf::RenderWindow window;
     // Frame time
     float ft;
+
+    sf::SoundBuffer helicopterSpin;
 };
 
 // Defined in main.cpp

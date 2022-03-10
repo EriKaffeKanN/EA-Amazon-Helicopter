@@ -2,6 +2,19 @@
 #include "sceneManager.h"
 #include "scene.h"
 
+#include <iostream>
+
+static sf::SoundBuffer soundBufferFromFile (const char* filename)
+{
+    sf::SoundBuffer sb;
+    if (!sb.loadFromFile (filename))
+    {
+        std::cerr << "OOOOOOOOOOOO\n";
+        std::exit (2);
+    }
+    return sb;
+}
+
 Game::Game ()
 {
     this->ft = 0;
@@ -11,6 +24,8 @@ void Game::init (sf::VideoMode videoMode, const char* windowTitle)
 {
     this->window.create(videoMode, windowTitle);
     SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::SPLASH_SCREEN));
+
+    this->helicopterSpin = soundBufferFromFile ("../resources/sfx/helicopterSpin.wav");
 }
 
 void Game::loop ()

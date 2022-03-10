@@ -19,6 +19,9 @@ GameScene::GameScene()
              SceneManager::getBgPath (SceneManager::Scenes::GAME))
 {
     initializeWorld();
+
+    this->mainMusic.openFromFile ("../resources/sfx/mainMusic.wav");
+    this->mainMusic.play ();
 }
 
 GameScene::~GameScene()

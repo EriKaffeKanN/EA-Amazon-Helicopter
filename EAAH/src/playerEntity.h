@@ -5,6 +5,7 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 class PlayerEntity: public Entity
 {
@@ -16,6 +17,10 @@ public:
     void update() override final;
 
     float bombCooldown = 0;
+
+    sf::Sound spinSound;
+
+private:
 };
 
 #endif
