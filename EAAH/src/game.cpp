@@ -25,7 +25,9 @@ void Game::init (sf::VideoMode videoMode, const char* windowTitle)
     this->window.create(videoMode, windowTitle);
     SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::SPLASH_SCREEN));
 
-    this->helicopterSpin = soundBufferFromFile ("../resources/sfx/helicopterSpin.wav");
+    this->sfx.helicopterSpinSound = soundBufferFromFile ("../resources/sfx/helicopterSpin.wav");
+
+    this->sfx.gameplayMusic.openFromFile ("../resources/sfx/gameplayMusic.wav");
 }
 
 void Game::loop ()

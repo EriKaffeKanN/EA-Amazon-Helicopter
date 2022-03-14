@@ -46,8 +46,6 @@ private:
     std::vector<Entity*> entities;
     std::vector<Tree*> trees;
 
-    sf::Music mainMusic;
-
     float bulldozerTimer = 0;
     float timeUntilSpawnBulldozer = 15.f;
 };

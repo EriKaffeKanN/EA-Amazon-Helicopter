@@ -6,7 +6,7 @@ PlayerEntity::PlayerEntity(sf::Vector2<float> pos, sf::Vector2<float> size)
 {
     spriteSheet = new SpriteSheet("../resources/textures/helicopter.png", size, sf::Vector2<int>(40, 22), new int[1]{7}, 1, 0.3f);
 
-    this->spinSound.setBuffer (game.helicopterSpin);
+    this->spinSound.setBuffer (game.sfx.helicopterSpinSound);
     this->spinSound.setLoop (true);
     this->spinSound.play ();
 }

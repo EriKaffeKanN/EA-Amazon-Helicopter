@@ -19,7 +19,11 @@ public:
     // Frame time
     float ft;
 
-    sf::SoundBuffer helicopterSpin;
+    struct
+    {
+        sf::SoundBuffer helicopterSpinSound;
+        sf::Music gameplayMusic;
+    } sfx;
 };
 
 // Defined in main.cpp

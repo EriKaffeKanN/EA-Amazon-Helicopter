@@ -20,8 +20,8 @@ GameScene::GameScene()
 {
     initializeWorld();
 
-    this->mainMusic.openFromFile ("../resources/sfx/mainMusic.wav");
-    this->mainMusic.play ();
+    game.sfx.gameplayMusic.setLoop (true);
+    game.sfx.gameplayMusic.play ();
 }
 
 GameScene::~GameScene()
