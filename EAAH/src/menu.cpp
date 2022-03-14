@@ -37,14 +37,25 @@ void Menu::update ()
         this->lastPressed &= ~(static_cast<int> (Menu::menuInputs::DOWN));
     }
 
+    if (this->currSelected < 0)
+    {
+        this->currSelected = this->items.size () - 1;
+    }
+    else if (this->currSelected >= this->items.size ())
+    {
+        this->currSelected = 0;
+    }
+
+    this->items [this->currSelected].onSelect ();
+
     // This actually needs to be debounced as well since it can be returned to
     // from the pause menu
     if (sf::Keyboard::isKeyPressed (sf::Keyboard::Key::Enter))
     {
         if (!(this->lastPressed & static_cast<int> (Menu::menuInputs::CLICK)))
         {
-            this->items [this->currSelected].call ();
             this->lastPressed |= static_cast<int> (Menu::menuInputs::CLICK);
+            this->items [this->currSelected].call ();
 
             // This return is absolutely neccesary to avoid segfaults, should the menu
             // be deleted by the callback
@@ -56,28 +67,18 @@ void Menu::update ()
         this->lastPressed &= ~(static_cast<int> (Menu::menuInputs::CLICK));
     }
 
-    if (this->currSelected < 0)
-    {
-        this->currSelected = this->items.size () - 1;
-    }
-    else if (this->currSelected == this->items.size ())
-    {
-        this->currSelected = 0;
-    }
-
-    this->items [this->currSelected].onSelect ();
-
     sf::Font font;
     font.loadFromFile ("../resources/fonts/LiberationSans-Regular.ttf");
     for (int i = 0,
-        pos = this->target.getView ().getCenter ().y -
-            ((this->items.size () / 2 + 1) * this->items [0].text.getCharacterSize ());
-        i < this->items.size (); i++, pos += 50)
+            pos = this->target.getView ().getCenter ().y -
+            ((int)(this->items.size () / 2 + 1) * this->items [0].text.getCharacterSize ());
+        i < this->items.size ();
+        i++, pos += 50)
     {
         this->items [i].text.setFont (font);
         uint16_t textWidth = this->items [i].text.getLocalBounds ().width;
         this->items [i].text.setPosition (
-                (target.getView ().getCenter ().x) - textWidth / 2, pos);
+                (target.getView ().getCenter ().x) - (int)(textWidth / 2), pos);
         this->items [i].draw (this->target);
     }
 }
