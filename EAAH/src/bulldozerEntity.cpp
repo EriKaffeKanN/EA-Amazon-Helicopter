@@ -14,6 +14,7 @@ BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size
     this->currentBehaviour = BulldozerEntity::Behaviour::ROAM;
 
     // Initialize behaviour variables
+    this->behaviourTimer = 0;
     //     Roaming
     this->roamTimer = 0.f;
     this->timeUntilChangeDirection = this->timeUntilChangeDirection = (rand() % 4) + 2;
