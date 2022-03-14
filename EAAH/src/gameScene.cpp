@@ -161,7 +161,7 @@ GameScene::CollisionPacket getEntityCollisionPacket (Entity* entity)
     {
         packet.collider = GameScene::CollisionPacket::FERTILIZER;
     }
-    else if (typeid (*entity) == typeid (Tree))
+    else if (typeid (*entity) == typeid (BulldozerEntity))
     {
         packet.collider = GameScene::CollisionPacket::ENEMY;
     }
