@@ -27,7 +27,7 @@ protected:
     class BgImage : public sf::Drawable
     {
     public:
-        BgImage (sf::Window&, const char* image);
+        BgImage (sf::RenderTarget&, const char* image);
         void draw (sf::RenderTarget&, sf::RenderStates) const override;
     private:
         sf::VertexArray verticies;
