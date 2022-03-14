@@ -11,8 +11,8 @@
 class BulldozerEntity : public Entity
 {
 public:
-    BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size, std::vector<Tree*>* trees);
-    ~BulldozerEntity() override final;
+    BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size, std::vector<Tree*>& trees);
+    // ~BulldozerEntity() override final;
 
     void update() override final;
     void onCollision(GameScene::CollisionPacket packet) override final;
@@ -37,7 +37,7 @@ private:
     void changeBehaviour(Behaviour behaviour);
 
     void selectTarget();
-    std::vector<Tree*>* treesRef; // so each bulldozer knows where each tree is
+    std::vector<Tree*>& treesRef; // so each bulldozer knows where each tree is
     Tree* targetTree;
 
     float behaviourTimer;

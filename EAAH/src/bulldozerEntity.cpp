@@ -6,10 +6,9 @@
 #include <iostream>
 #include <cmath>
 
-BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size, std::vector<Tree*>* treesRef)
-    : Entity(pos, size)
+BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size, std::vector<Tree*>& treesReff)
+    : Entity(pos, size), treesRef (treesReff)
 {
-    this->treesRef = treesRef;
     this->spriteSheet = new SpriteSheet("../resources/textures/bulldozer.png", this->size, sf::Vector2<int>(64, 64), new int[3]{3, 13, 3}, 3, 0.3f);
     this->currentBehaviour = BulldozerEntity::Behaviour::ROAM;
 
@@ -27,11 +26,6 @@ BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size
     this->attackTimer = 0.f;
     this->timeUntilDestoryLog = 0.8f;
     this->timeUntilRoam = (rand() % 3) + 3.f;
-}
-
-BulldozerEntity::~BulldozerEntity()
-{
-    delete this->treesRef;
 }
 
 void BulldozerEntity::update()
@@ -143,15 +137,9 @@ void BulldozerEntity::roam()
 
 void BulldozerEntity::selectTarget()
 {
-    if(this->treesRef == nullptr)
-    {
-        std::cerr << "No trees to search for!\n";
-        return;
-    }
-
     // Sort all non-dead trees
     std::vector<Tree*> aliveTrees;
-    for(Tree* tree: *this->treesRef)
+    for(Tree* tree : this->treesRef)
     {
         if(tree->length > 0)
             aliveTrees.push_back(tree);

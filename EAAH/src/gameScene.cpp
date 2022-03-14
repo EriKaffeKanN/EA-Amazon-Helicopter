@@ -77,7 +77,7 @@ void GameScene::spawnEnemy(float posX)
 {
     sf::Vector2<float> enemyPos = {posX, this->groundLevel - 100.f};
     sf::Vector2<float> enemySize = {256.f, 256.f};
-    Entity* tmpEnemy = new BulldozerEntity(enemyPos, enemySize, &this->trees);
+    Entity* tmpEnemy = new BulldozerEntity(enemyPos, enemySize, this->trees);
     spawnEntity(tmpEnemy);
 }
 
