@@ -21,7 +21,7 @@ SpriteSheet::SpriteSheet(const char* texturePath, sf::Vector2<float> size, sf::V
 
 SpriteSheet::~SpriteSheet()
 {
-    delete this->animationSizes;
+    delete[] this->animationSizes;
 }
 
 void SpriteSheet::loadSprite()
