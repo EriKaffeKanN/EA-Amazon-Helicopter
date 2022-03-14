@@ -216,7 +216,9 @@ void GameScene::checkCollisions ()
 
             if (box1.intersects (box2))
             {
-                if(typeid(*this->entities[i]) == typeid(BombEntity))
+                // This redeclaration makes things prettier and disables a warning
+                Entity* tmpEntity = this->entities [i];
+                if (typeid (*tmpEntity) == typeid (BombEntity))
                 {
                     this->trees[j]->onCollision({GameScene::CollisionPacket::FERTILIZER});
                     GameScene::CollisionPacket packet = {GameScene::CollisionPacket::TREE};
