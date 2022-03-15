@@ -26,16 +26,19 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
-    for(int i = this->entities.size()-1; i >= 0; i--)
+    for (Entity* entity : this->entities)
     {
-        delete this->entities[i];
-        this->entities.pop_back();
+        delete entity;
+    }
+
+    for (Tree* tree : this->trees)
+    {
+        delete tree;
     }
 }
 
 void GameScene::initializeWorld()
 {
-    
     // Spawn player
     sf::Vector2<float> playerPos = {20.f, 10.f};
     sf::Vector2<float> playerSize = {200.f, 110.f};

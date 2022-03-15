@@ -16,11 +16,16 @@ Tree::Tree(int length, int size)
 
 Tree::~Tree()
 {
-    for(int i = this->logs.size()-1; i >= 0; i--)
+    while (!this->logs.empty ())
     {
-        delete this->logs[i];
-        this->logs.pop_back();
+        delete this->logs.back ();
+        this->logs.pop_back ();
     }
+    // for(int i = this->logs.size()-1; i >= 0; i--)
+    // {
+        // delete this->logs[i];
+        // this->logs.pop_back();
+    // }
     delete this->particles;
 }
 
@@ -35,7 +40,10 @@ void Tree::update()
             this->growingTimer = 0.f;
             this->growing = false;
         }
-        this->growingTimer += game.ft;
+        else
+        {
+            this->growingTimer += game.ft;
+        }
     }
 }
 
