@@ -39,5 +39,5 @@ void Entity::onCollision(GameScene::CollisionPacket packet)
 
 void Entity::loadSprite()
 {
-    spriteSheet->loadSprite();
+    spriteSheet->loadSprite(this->pos);
 }

@@ -24,7 +24,7 @@ SpriteSheet::~SpriteSheet()
     delete[] this->animationSizes;
 }
 
-void SpriteSheet::loadSprite()
+void SpriteSheet::loadSprite(const sf::Vector2<float>& pos)
 {
     if(!this->texture.loadFromFile(this->texturePath))
     {
@@ -45,6 +45,8 @@ void SpriteSheet::loadSprite()
         scaledTextureX, // Scale to fit specified dimensions
         scaledTextureY
     );
+
+    this->sprite.setPosition(pos.x + this->offsetX, pos.y);
 }
 
 void SpriteSheet::update(sf::Vector2<float>& pos)
