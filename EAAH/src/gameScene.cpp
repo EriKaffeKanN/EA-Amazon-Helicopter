@@ -175,8 +175,9 @@ void GameScene::sweepEntities()
     {
         if(this->entities[i]->dead)
         {
+            delete this->entities [i];
             this->entities.erase(this->entities.begin() + i);
-            i++;
+            i--;
         }
     }
 }
