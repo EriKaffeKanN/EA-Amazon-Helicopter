@@ -24,7 +24,8 @@ SpriteSheet::~SpriteSheet()
     delete[] this->animationSizes;
 }
 
-void SpriteSheet::loadSprite(const sf::Vector2<float>& pos)
+// Default direction is left
+void SpriteSheet::loadSprite(const sf::Vector2<float>& pos, Direction direction)
 {
     if(!this->texture.loadFromFile(this->texturePath))
     {
@@ -47,6 +48,9 @@ void SpriteSheet::loadSprite(const sf::Vector2<float>& pos)
     );
 
     this->sprite.setPosition(pos.x + this->offsetX, pos.y);
+
+    // To prevent offsetX from being uninitialized
+    this->setDirection (direction);
 }
 
 void SpriteSheet::update(sf::Vector2<float>& pos)

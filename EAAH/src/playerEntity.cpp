@@ -36,6 +36,10 @@ void PlayerEntity::update()
 
     Entity::update();
 }
+void PlayerEntity::loadSprite ()
+{
+    this->spriteSheet->loadSprite (this->pos, Direction::RIGHT);
+}
 
 void PlayerEntity::updateAnimation()
 {

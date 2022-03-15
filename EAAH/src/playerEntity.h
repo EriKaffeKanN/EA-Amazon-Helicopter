@@ -15,6 +15,7 @@ public:
     void updateAnimation();
 
     void update() override final;
+    void loadSprite () override;
 
     float bombCooldown = 0;
 

@@ -14,7 +14,7 @@ public:
     Entity(sf::Vector2<float> pos, sf::Vector2<float> size);
     virtual ~Entity();
 
-    void loadSprite();
+    virtual void loadSprite();
     virtual void update();
     virtual void onCollision(GameScene::CollisionPacket packet);
 

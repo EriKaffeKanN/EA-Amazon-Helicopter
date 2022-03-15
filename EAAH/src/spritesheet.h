@@ -12,7 +12,7 @@ class SpriteSheet
 public:
     SpriteSheet(const char* texturePath, sf::Vector2<float> size, sf::Vector2<int> frameSize, int* animationSizes, int numberOfAnimations, float animationLength);
     ~SpriteSheet();
-    void loadSprite(const sf::Vector2<float>& pos);
+    void loadSprite(const sf::Vector2<float>& pos, Direction direction = Direction::LEFT);
     void update(sf::Vector2<float>& pos);
     void setDirection(Direction dir);
     void switchDirection();

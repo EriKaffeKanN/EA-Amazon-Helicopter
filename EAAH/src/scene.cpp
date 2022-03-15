@@ -15,12 +15,10 @@ SceneManager::Scenes Scene::getType ()
 Scene::BgImage::BgImage (sf::RenderTarget& target, const char* imgPath)
 {
     sf::Vector2f targetSize = target.getView ().getSize ();
-    std::cerr << targetSize.x << ' ' << targetSize.y << '\n';
     this->verticies.setPrimitiveType (sf::Quads);
     this->verticies.resize (4);
     this->image.loadFromFile (imgPath);
     sf::Vector2u imgSize = image.getSize ();
-    std::cerr << imgSize.x << ' ' << imgSize.y << '\n';
 
     this->verticies [0].position = sf::Vector2f (0, 0);
     this->verticies [1].position = sf::Vector2f (targetSize.x - 1, 0);
