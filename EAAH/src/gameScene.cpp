@@ -251,8 +251,15 @@ bool GameScene::isGameOver ()
             return false;
         }
     }
-
-    return true;
+    
+    if (!player->dead)
+    {
+        return false;
+    }
+    else
+    {
+        return true;
+    }
 }
 
 void GameScene::onSwitchTo()
