@@ -244,15 +244,17 @@ void GameScene::checkCollisions ()
 
 bool GameScene::isGameOver ()
 {
+    bool treesExist = false;
     for (Tree* tree : this->trees)
     {
         if (tree->length > 0)
         {
-            return false;
+            treesExist = true;
+            break;
         }
     }
-    
-    if (!player->dead)
+
+    if (treesExist && !player->dead)
     {
         return false;
     }
