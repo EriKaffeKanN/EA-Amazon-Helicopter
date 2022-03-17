@@ -116,6 +116,13 @@ void GameScene::update()
     }
 
     // Game logic
+    if (isGameOver ())
+    {
+        SceneManager::popScene ();
+        SceneManager::pushScene (SceneManager::createScene (SceneManager::Scenes::GAME_OVER));
+        return;
+    }
+
     for(Tree* tree: this->trees)
     {
         tree->update();
@@ -233,12 +240,26 @@ void GameScene::checkCollisions ()
     }
 }
 
+bool GameScene::isGameOver ()
+{
+    for (Tree* tree : this->trees)
+    {
+        if (tree->length > 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void GameScene::onSwitchTo()
 {
-
+    game.sfx.gameplayMusic.play ();
 }
 
 void GameScene::onSwitchFrom()
 {
-
+    game.sfx.gameplayMusic.pause ();
+    game.sfx.gameplayMusic.pause ();
 }

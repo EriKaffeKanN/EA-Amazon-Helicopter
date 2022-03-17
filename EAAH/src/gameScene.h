@@ -41,6 +41,7 @@ private:
     void spawnTree(Tree* tree, int tileX);
     void initializeWorld();
     void sweepEntities();
+    bool isGameOver ();
 
     PlayerEntity* player;
     std::vector<Entity*> entities;

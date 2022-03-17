@@ -16,7 +16,8 @@ public:
         SPLASH_SCREEN,
         MAIN_MENU,
         PAUSE_MENU,
-        GAME
+        GAME,
+        GAME_OVER
     };
 
     struct SceneSettings

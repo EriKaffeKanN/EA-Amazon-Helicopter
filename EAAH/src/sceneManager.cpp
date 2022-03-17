@@ -3,6 +3,7 @@
 #include "mainMenuScene.h"
 #include "pauseMenuScene.h"
 #include "gameScene.h"
+#include "gameOverScene.h"
 
 #include <iostream>
 
@@ -18,16 +19,24 @@ std::unordered_map<SceneManager::Scenes, SceneManager::SceneSettings> SceneManag
     {SceneManager::Scenes::PAUSE_MENU,
      SceneManager::SceneSettings {"../resources/backgrounds/pauseMenuBg.png"}},
     {SceneManager::Scenes::GAME,
-     SceneManager::SceneSettings {"../resources/backgrounds/gameBg.png"}}
+     SceneManager::SceneSettings {"../resources/backgrounds/gameBg.png"}},
+    {SceneManager::Scenes::GAME_OVER,
+     SceneManager::SceneSettings {"../resources/backgrounds/gameOverBg.png"}}
 };
 
 void SceneManager::pushScene (Scene* scene)
 {
+    if (!sceneQueue.empty ())
+    {
+        sceneQueue.back ()->onSwitchFrom ();
+    }
+
     sceneQueue.push_back (scene);
 }
 
 void SceneManager::popScene ()
 {
+    sceneQueue.back ()->onSwitchFrom ();
     delete sceneQueue.back ();
     sceneQueue.pop_back ();
     if (!sceneQueue.empty ())
@@ -44,6 +53,7 @@ bool SceneManager::returnToScene (SceneManager::Scenes scene)
         {
             while (it != std::prev (sceneQueue.end ()))
             {
+                sceneQueue.back ()->onSwitchFrom ();
                 delete sceneQueue.back ();
                 sceneQueue.pop_back ();
             }
@@ -71,6 +81,9 @@ Scene* SceneManager::createScene (SceneManager::Scenes scene)
             break;
         case SceneManager::Scenes::GAME:
             return new GameScene ();
+            break;
+        case SceneManager::Scenes::GAME_OVER:
+            return new GameOverScene ();
             break;
     }
     // Should never reach
