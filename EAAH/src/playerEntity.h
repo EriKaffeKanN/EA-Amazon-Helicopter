@@ -2,6 +2,7 @@
 #define PLAYER_H_
 
 #include "entity.h"
+#include "gameScene.h"
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -12,10 +13,8 @@ class PlayerEntity: public Entity
 public:
     PlayerEntity(sf::Vector2<float> pos, sf::Vector2<float> velocity);
 
-    void updateAnimation();
-
     void update() override final;
-    void loadSprite () override;
+    void onCollision(GameScene::CollisionPacket packet) override final;
 
     float bombCooldown = 0;
 

@@ -26,6 +26,8 @@ BulldozerEntity::BulldozerEntity(sf::Vector2<float> pos, sf::Vector2<float> size
     this->attackTimer = 0.f;
     this->timeUntilDestoryLog = 0.8f;
     this->timeUntilRoam = (rand() % 3) + 3.f;
+    //     Fleeing
+    this->fleeSpeed = 400.f;
 }
 
 void BulldozerEntity::update()
@@ -41,6 +43,9 @@ void BulldozerEntity::update()
         case BulldozerEntity::Behaviour::ATTACK:
             this->attack();
             break;
+        case BulldozerEntity::Behaviour::FLEE:
+            this->flee();
+            break;
 
     }
     this->behaviourTimer += game.ft;
@@ -49,7 +54,10 @@ void BulldozerEntity::update()
 
 void BulldozerEntity::onCollision(GameScene::CollisionPacket packet)
 {
-    // Get squashed...
+    if(packet.collider == GameScene::CollisionPacket::FERTILIZER)
+    {
+        this->changeBehaviour(Behaviour::FLEE);
+    }
 }
 
 void BulldozerEntity::changeBehaviour(Behaviour behaviour)
@@ -70,8 +78,10 @@ void BulldozerEntity::changeBehaviour(Behaviour behaviour)
         case Behaviour::ATTACK:
             this->velocity.x = 0;
             this->timeUntilRoam = (rand() % 3) + 3.f;
+            this->spriteSheet->currentAnimation = (int)Animations::DIGGING;
             break;
-
+        case Behaviour::FLEE:
+            this->spriteSheet->currentAnimation = (int)Animations::MOVING;
     }
 }
 
@@ -188,8 +198,6 @@ void BulldozerEntity::hunt()
 
 void BulldozerEntity::attack()
 {
-    this->spriteSheet->currentAnimation = (int)Animations::DIGGING;
-
     // See if should change behaviour
     if(this->behaviourTimer > this->timeUntilRoam)
     {
@@ -209,4 +217,15 @@ void BulldozerEntity::attack()
     }
 
     this->attackTimer += game.ft;
+}
+
+void BulldozerEntity::flee()
+{
+    // Check if should change behaviour
+    if(this->pos.x > 1400.f || this->pos.x < -200.f)
+    {
+        this->changeBehaviour(Behaviour::ROAM);
+    }
+
+    this->velocity.x = this->fleeSpeed * game.ft;
 }
