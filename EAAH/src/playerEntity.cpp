@@ -35,12 +35,11 @@ void PlayerEntity::update()
 
     Entity::update();
 }
-void PlayerEntity::loadSprite ()
-{
-    this->spriteSheet->loadSprite (this->pos, Direction::RIGHT);
-}
 
-void PlayerEntity::updateAnimation()
+void PlayerEntity::onCollision(GameScene::CollisionPacket packet)
 {
-    // Do epic stuff
+    if(packet.collider == GameScene::CollisionPacket::TREE)
+    {
+        std::cout << "dead lol\n";
+    }
 }

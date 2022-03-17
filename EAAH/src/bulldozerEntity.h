@@ -21,7 +21,8 @@ public:
     {
         ROAM,
         HUNT,
-        ATTACK
+        ATTACK,
+        FLEE
     };
     enum class Animations
     {
@@ -33,6 +34,7 @@ private:
     void roam();
     void hunt();
     void attack();
+    void flee();
 
     void changeBehaviour(Behaviour behaviour);
 
@@ -56,6 +58,9 @@ private:
     float attackTimer; // timer for destorying logs
     float timeUntilDestoryLog;
     float timeUntilRoam;
+
+    // Fleeing variables
+    float fleeSpeed;
 
 
     Behaviour currentBehaviour;
