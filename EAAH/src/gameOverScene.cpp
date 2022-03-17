@@ -20,6 +20,13 @@ GameOverScene::GameOverScene ()
                 })}))
 {
 
+    game.sfx.gameOverMusic.setLoop (true);
+    game.sfx.gameOverMusic.play ();
+}
+
+GameOverScene::~GameOverScene ()
+{
+    game.sfx.gameOverMusic.stop ();
 }
 
 void GameOverScene::update ()
@@ -31,7 +38,6 @@ void GameOverScene::update ()
 
 void GameOverScene::onSwitchFrom ()
 {
-
 }
 
 void GameOverScene::onSwitchTo ()

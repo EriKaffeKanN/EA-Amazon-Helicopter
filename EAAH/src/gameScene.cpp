@@ -35,6 +35,8 @@ GameScene::~GameScene()
     {
         delete tree;
     }
+
+    game.sfx.gameplayMusic.stop ();
 }
 
 void GameScene::initializeWorld()

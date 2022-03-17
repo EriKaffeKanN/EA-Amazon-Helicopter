@@ -23,6 +23,7 @@ public:
     {
         sf::SoundBuffer helicopterSpinSound;
         sf::Music gameplayMusic;
+        sf::Music gameOverMusic;
     } sfx;
 };
 
