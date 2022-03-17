@@ -221,9 +221,11 @@ void GameScene::checkCollisions ()
         sf::FloatRect box1 (this->entities [i]->pos, this->entities [i]->size);
         for (int j = 0; j < this->trees.size (); j++)
         {
-            sf::FloatRect box2 (this->trees [j]->pos,
-                    sf::Vector2f (this->trees [j]->size,
-                        this->trees [j]->size * (this->trees [j]->length + 1))); // added + 1 to also account for the tree stump
+            float treeHeight = this->trees [j]->size * (this->trees [j]->length);
+            sf::FloatRect box2 (this->trees [j]->pos.x,
+                                this->trees [j]->pos.y - treeHeight,
+                                this->trees [j]->size,
+                                treeHeight);
 
             if (box1.intersects (box2))
             {

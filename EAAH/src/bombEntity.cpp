@@ -19,7 +19,8 @@ void BombEntity::update()
 
 void BombEntity::onCollision(GameScene::CollisionPacket packet)
 {
-    if(packet.collider == GameScene::CollisionPacket::TREE)
+    if(packet.collider == GameScene::CollisionPacket::TREE ||
+       packet.collider == GameScene::CollisionPacket::ENEMY)
     {
         this->dead = true;
     }
