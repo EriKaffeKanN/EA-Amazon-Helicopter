@@ -23,18 +23,7 @@ void SplashScreenScene::update ()
     }
 
     game.window.draw (this->background);
-
-    sf::Font font;
-    font.loadFromFile ("../resources/fonts/LiberationSans-Regular.ttf");
-
-    sf::Text text;
-    text.setFont (font);
-    text.setString ("Splash screen osv");
-    text.setCharacterSize (24);
-    text.setFillColor (sf::Color::White);
-    text.setStyle (sf::Text::Bold);
-
-    game.window.draw (text);
+    
 }
 
 void SplashScreenScene::onSwitchTo ()

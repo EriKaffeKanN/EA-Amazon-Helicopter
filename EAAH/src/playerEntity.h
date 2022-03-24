@@ -22,6 +22,8 @@ public:
 
 private:
     float moveSpeed = 160.f;
+    
+    bool crashing;
 };
 
 #endif

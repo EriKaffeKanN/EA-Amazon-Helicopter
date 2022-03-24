@@ -4,6 +4,7 @@
 #include "scene.h"
 
 #include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
 
 class Entity;
 class PlayerEntity;
@@ -46,6 +47,10 @@ private:
     PlayerEntity* player;
     std::vector<Entity*> entities;
     std::vector<Tree*> trees;
+
+    float gameTimer;
+    sf::Font timerFont;
+    sf::Text timerDisplay;
 
     float bulldozerTimer = 0;
     float timeUntilSpawnBulldozer = 15.f;

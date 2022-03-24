@@ -10,6 +10,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <string>
 
 const float GameScene::groundLevel = 620.f;
 const float GameScene::tileSize = 80.f;
@@ -22,6 +23,13 @@ GameScene::GameScene()
 
     game.sfx.gameplayMusic.setLoop (true);
     game.sfx.gameplayMusic.play ();
+
+    this->timerFont.loadFromFile("../resources/fonts/LiberationSans-Regular.ttf");
+    this->timerDisplay.setFont(this->timerFont);
+    this->timerDisplay.setPosition(30.f, 30.f);
+    this->timerDisplay.setString("0");
+
+    this->gameTimer = 0.f;
 }
 
 GameScene::~GameScene()
@@ -116,6 +124,11 @@ void GameScene::update()
     {
         game.window.draw (*entity); // TODO: Find out why things don't always draw properly
     }
+
+    std::string tmpDisplay = std::to_string(this->gameTimer);
+    this->timerDisplay.setString(tmpDisplay);
+    game.window.draw(this->timerDisplay);
+    this->gameTimer += game.ft;
 
     // Game logic
     if (isGameOver ())
@@ -233,12 +246,8 @@ void GameScene::checkCollisions ()
             {
                 // This redeclaration makes things prettier and disables a warning
                 Entity* tmpEntity = this->entities [i];
-                if (typeid (*tmpEntity) == typeid (BombEntity))
-                {
-                    this->trees[j]->onCollision({GameScene::CollisionPacket::FERTILIZER});
-                    GameScene::CollisionPacket packet = {GameScene::CollisionPacket::TREE};
-                    this->entities[i]->onCollision(packet);
-                }
+                this->entities [i]->onCollision ({GameScene::CollisionPacket::TREE});
+                this->trees [j]->onCollision (getEntityCollisionPacket (tmpEntity));
             }
         }
     }
